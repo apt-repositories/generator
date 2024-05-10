@@ -1,0 +1,156 @@
+labels:
+  dependencies:
+    color: "BFD4F2"
+    description: Pull requests that update a dependency file
+  # https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels#about-default-labels
+  good first issue:
+    color: "7057ff"
+    description: If you haven't contributed yet, this might be a good place to start
+  help wanted:
+    color: "008672"
+    description: We can't figure this out, please help
+
+  metadata:
+    color: "EEEEEE"
+    description: Relates to package metadata
+  debian:
+    color: "CE0056"
+    description: Anything relating to Debian
+  ubuntu:
+    color: "E95420"
+    description: Anything relating to Ubuntu
+
+  debian:buster:
+    color: "CE0056"
+    description: Debian 10 Buster (oldoldstable)
+  debian:bullseye:
+    color: "CE0056"
+    description: Debian 11 Bullseye (oldstable)
+  debian:bookworm:
+    color: "CE0056"
+    description: Debian 12 Bookworm (stable)
+  debian:trixie:
+    color: "CE0056"
+    description: Debian 13 Trixie (testing)
+  debian:sid:
+    color: "CE0056"
+    description: Debian 14 Sid (unstable)
+
+  debian:buster-updates:
+    color: "69012C"
+    description: Debian 10 Buster (oldoldstable) Updates
+  debian:bullseye-updates:
+    color: "69012C"
+    description: Debian 11 Bullseye (oldstable) Updates
+  debian:bookworm-updates:
+    color: "69012C"
+    description: Debian 12 Bookworm (stable) Updates
+  debian:trixie-updates:
+    color: "69012C"
+    description: Debian 13 Trixie (testing) Updates
+  debian:sid-updates:
+    color: "69012C"
+    description: Debian 14 Sid (unstable) Updates
+
+  debian-security:
+    color: "FC0069"
+    description: Security Updates for Debian
+  debian-security:buster-security:
+    color: "FC0069"
+    description: Security Updates for Debian 10 Buster (oldoldstable)
+  debian-security:bullseye-security:
+    color: "FC0069"
+    description: Security Updates for Debian 11 Bullseye (oldstable)
+  debian-security:bookworm-security:
+    color: "FC0069"
+    description: Security Updates for Debian 12 Bookworm (stable)
+  debian-security:trixie-security:
+    color: "FC0069"
+    description: Security Updates for Debian 13 Trixie (testing)
+  debian-security:sid-security:
+    color: "FC0069"
+    description: Security Updates for Debian 14 Sid (unstable)
+
+  ubuntu:trusty:
+    color: "E95420"
+    description: Ubuntu 14.04 Trusty Tahr LTS
+  ubuntu:xenial:
+    color: "E95420"
+    description: Ubuntu 16.04 Xenial Xerus LTS
+  ubuntu:bionic:
+    color: "E95420"
+    description: Ubuntu 18.04 Bionic Beaver LTS
+  ubuntu:focal:
+    color: "E95420"
+    description: Ubuntu 20.04 Focal Fossa LTS
+  ubuntu:jammy:
+    color: "E95420"
+    description: Ubuntu 22.04 Jammy Jellyfish LTS
+  ubuntu:lunar:
+    color: "E95420"
+    description: Ubuntu 23.04 Lunar Lobster
+  ubuntu:mantic:
+    color: "E95420"
+    description: Ubuntu 23.10 Mantic Minotaur
+  ubuntu:noble:
+    color: "E95420"
+    description: Ubuntu 24.04 Noble Numbat LTS
+  ubuntu:oracular:
+    color: "E95420"
+    description: Ubuntu 24.10 Oracular Oriole
+
+  ubuntu:trusty-updates:
+    color: "BD4319"
+    description: Ubuntu 14.04 Trusty Tahr LTS Updates
+  ubuntu:xenial-updates:
+    color: "BD4319"
+    description: Ubuntu 16.04 Xenial Xerus LTS Updates
+  ubuntu:bionic-updates:
+    color: "BD4319"
+    description: Ubuntu 18.04 Bionic Beaver LTS Updates
+  ubuntu:focal-updates:
+    color: "BD4319"
+    description: Ubuntu 20.04 Focal Fossa LTS Updates
+  ubuntu:jammy-updates:
+    color: "BD4319"
+    description: Ubuntu 22.04 Jammy Jellyfish LTS Updates
+  ubuntu:lunar-updates:
+    color: "BD4319"
+    description: Ubuntu 23.04 Lunar Lobster Updates
+  ubuntu:mantic-updates:
+    color: "BD4319"
+    description: Ubuntu 23.10 Mantic Minotaur Updates
+  ubuntu:noble-updates:
+    color: "BD4319"
+    description: Ubuntu 24.04 Noble Numbat LTS Updates
+  ubuntu:oracular-updates:
+    color: "BD4319"
+    description: Ubuntu 24.10 Oracular Oriole Updates
+
+  ubuntu:trusty-security:
+    color: "F55720"
+    description: Security Updates for Ubuntu 14.04 Trusty Tahr LTS
+  ubuntu:xenial-security:
+    color: "F55720"
+    description: Security Updates for Ubuntu 16.04 Xenial Xerus LTS
+  ubuntu:bionic-security:
+    color: "F55720"
+    description: Security Updates for Ubuntu 18.04 Bionic Beaver LTS
+  ubuntu:focal-security:
+    color: "F55720"
+    description: Security Updates for Ubuntu 20.04 Focal Fossa LTS
+  ubuntu:jammy-security:
+    color: "F55720"
+    description: Security Updates for Ubuntu 22.04 Jammy Jellyfish LTS
+  ubuntu:lunar-security:
+    color: "F55720"
+    description: Security Updates for Ubuntu 23.04 Lunar Lobster
+  ubuntu:mantic-security:
+    color: "F55720"
+    description: Security Updates for Ubuntu 23.10 Mantic Minotaur
+  ubuntu:noble-security:
+    color: "F55720"
+    description: Security Updates for Ubuntu 24.04 Noble Numbat LTS
+  ubuntu:oracular-security:
+    color: "F55720"
+    description: Security Updates for Ubuntu 24.10 Oracular Oriole

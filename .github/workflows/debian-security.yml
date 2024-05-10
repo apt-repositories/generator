@@ -1,0 +1,96 @@
+name: Debian Security
+
+on:
+  schedule:
+    # nightly at 3:00
+    - cron: "3 0 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: debian-security
+  cancel-in-progress: true
+
+jobs:
+  metadata:
+    name: Metadata
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      DEBIAN_MIRROR: security.debian.org
+      DEBIAN_ROOT: debian-security
+      DEBIAN_ARCHITECTURE: amd64
+    strategy:
+      fail-fast: false
+      matrix:
+        DEBIAN_RELEASE:
+          - bookworm-security
+          - bullseye-security
+          - trixie-security
+        DEBIAN_COMPONENT:
+          - main
+          - contrib
+          - non-free
+          - non-free-firmware
+        exclude:
+          - DEBIAN_RELEASE: bullseye-security
+            DEBIAN_COMPONENT: non-free-firmware
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
+
+      - name: Select NodeJS version
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
+        with:
+          # renovate: datasource=docker depName=node versioning=node
+          node-version: "20.12.2"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+
+      - name: Update metadata
+        id: metadata
+        env:
+          DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
+          DEBIAN_COMPONENT: ${{ matrix.DEBIAN_COMPONENT }}
+        run: |
+          mkdir --parents apt/$DEBIAN_ROOT
+          cd apt/$DEBIAN_ROOT
+
+          rm -rf $DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
+          mkdir --parents $DEBIAN_RELEASE/$DEBIAN_COMPONENT
+          cd $DEBIAN_RELEASE/$DEBIAN_COMPONENT
+
+          set -o pipefail
+          echo "log<<EOF" >> $GITHUB_OUTPUT
+          yarn metadata:generate | tee --append $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          set +o pipefail
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@6d6857d36972b65feb161a90e484f2984215f83e # v6
+        with:
+          branch: "${{ env.DEBIAN_ROOT }}/${{ matrix.DEBIAN_RELEASE }}/${{ matrix.DEBIAN_COMPONENT }}"
+          title: "chore(${{ env.DEBIAN_ROOT }}): ${{ matrix.DEBIAN_RELEASE }}/${{ matrix.DEBIAN_COMPONENT }}"
+          labels: |
+            metadata
+            debian
+            ${{ env.DEBIAN_ROOT }}
+            ${{ env.DEBIAN_ROOT }}:${{ matrix.DEBIAN_RELEASE }}
+          body: |
+            ## Metadata Log
+            ```shell
+            ${{ steps.metadata.outputs.log }}
+            ```
+          commit-message: |
+            chore(${{ env.DEBIAN_ROOT }}): Metadata update for ${{ matrix.DEBIAN_RELEASE }}/${{ matrix.DEBIAN_COMPONENT }}
+
+            Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
