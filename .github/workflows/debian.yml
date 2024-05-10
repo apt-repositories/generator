@@ -53,15 +53,6 @@ jobs:
           # renovate: datasource=docker depName=node versioning=node
           node-version: "20.12.2"
 
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Build
-        run: yarn build
-
       - name: Update metadata
         id: metadata
         env:
@@ -77,28 +68,28 @@ jobs:
 
           set -o pipefail
           echo "log<<EOF" >> $GITHUB_OUTPUT
-          yarn metadata:generate | tee --append $GITHUB_OUTPUT
+          npx @apt-repositories/generator | tee --append $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
-      - name: Make observable
-        id: observable
-        env:
-          DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
-          DEBIAN_COMPONENT: ${{ matrix.DEBIAN_COMPONENT }}
-        run: |
-          mkdir --parents apt/$DEBIAN_ROOT-observable
-          cd apt/$DEBIAN_ROOT-observable
-
-          rm -rf $DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
-          mkdir --parents $DEBIAN_RELEASE/$DEBIAN_COMPONENT
-          cd $DEBIAN_RELEASE/$DEBIAN_COMPONENT
-
-          set -o pipefail
-          echo "log<<EOF" >> $GITHUB_OUTPUT
-          yarn metadata:observable:debian | tee --append $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-          set +o pipefail
+      #      - name: Make observable
+      #        id: observable
+      #        env:
+      #          DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
+      #          DEBIAN_COMPONENT: ${{ matrix.DEBIAN_COMPONENT }}
+      #        run: |
+      #          mkdir --parents apt/$DEBIAN_ROOT-observable
+      #          cd apt/$DEBIAN_ROOT-observable
+      #
+      #          rm -rf $DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
+      #          mkdir --parents $DEBIAN_RELEASE/$DEBIAN_COMPONENT
+      #          cd $DEBIAN_RELEASE/$DEBIAN_COMPONENT
+      #
+      #          set -o pipefail
+      #          echo "log<<EOF" >> $GITHUB_OUTPUT
+      #          yarn metadata:observable:debian | tee --append $GITHUB_OUTPUT
+      #          echo "EOF" >> $GITHUB_OUTPUT
+      #          set +o pipefail
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@6d6857d36972b65feb161a90e484f2984215f83e # v6

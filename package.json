@@ -1,9 +1,15 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "name": "@apt-repositories/generator",
+  "version": "0.0.1",
   "license": "MIT",
   "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
   "type": "module",
+  "bin": "output/main.js",
+  "files": [
+    "output/main.js",
+    "output/main.js.map"
+  ],
   "scripts": {
     "build": "node build.js",
     "clean": "rm -rf ./output",
