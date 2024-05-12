@@ -83,12 +83,11 @@ jobs:
       - name: Make observable
         id: observable
         env:
-          DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
           DEBIAN_COMPONENT: ${{ matrix.DEBIAN_COMPONENT }}
           DEBIAN_OBSERVABLES: |
-            ubuntu/${DEBIAN_RELEASE}
-            ubuntu/${DEBIAN_RELEASE}-updates
-            ubuntu/${DEBIAN_RELEASE}-security
+            ubuntu/${{ matrix.DEBIAN_RELEASE }}
+            ubuntu/${{ matrix.DEBIAN_RELEASE }}-updates
+            ubuntu/${{ matrix.DEBIAN_RELEASE }}-security
         run: |
           mkdir --parents apt/$DEBIAN_ROOT-observable
           cd apt/$DEBIAN_ROOT-observable

@@ -76,12 +76,11 @@ jobs:
       - name: Make observable
         id: observable
         env:
-          DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
           DEBIAN_COMPONENT: ${{ matrix.DEBIAN_COMPONENT }}
           DEBIAN_OBSERVABLES: |
-            debian/${DEBIAN_RELEASE}
-            debian/${DEBIAN_RELEASE}-updates
-            debian-security/${DEBIAN_RELEASE}-security
+            debian/${{ matrix.DEBIAN_RELEASE }}
+            debian/${{ matrix.DEBIAN_RELEASE }}-updates
+            debian-security/${{ matrix.DEBIAN_RELEASE }}-security
         run: |
           mkdir --parents apt/$DEBIAN_ROOT-observable
           cd apt/$DEBIAN_ROOT-observable
