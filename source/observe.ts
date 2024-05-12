@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { cp, mkdir, readdir, rm } from "node:fs/promises";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { argv } from "node:process";
 
 const DEBIAN_COMPONENT = process.env.DEBIAN_COMPONENT ?? "main";
@@ -17,7 +17,7 @@ const main = async () => {
 
   for (const observables of DEBIAN_OBSERVABLES) {
     const observedPathComponent = join("apt", observables);
-    const observedPathDebs = join(observedPathComponent, DEBIAN_COMPONENT);
+    const observedPathDebs = resolve(join(observedPathComponent, DEBIAN_COMPONENT));
 
     console.log(`Reading '${observedPathDebs}'...`);
     const debs = await readdir(observedPathDebs).catch(() => []);
