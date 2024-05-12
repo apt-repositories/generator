@@ -25,6 +25,7 @@ const main = async () => {
     console.log(
       `  Component '${DEBIAN_COMPONENT}' of '${observable}' has '${debs.length.toString()}' packages.`,
     );
+    console.log(`  Merging '${observedPathDebs}' into '${OUTPUT_DIRECTORY}'...`);
     for (const deb of debs) {
       const observedPathDeb = join(observedPathDebs, deb);
       const targetPath = join(OUTPUT_DIRECTORY, deb);
