@@ -92,7 +92,7 @@ jobs:
 
           set -o pipefail
           echo "log<<EOF" >> $GITHUB_OUTPUT
-          npx --package @apt-repositories/generator --command observe "$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT" | tee --append $GITHUB_OUTPUT
+          npx --package @apt-repositories/generator --command observe "apt/$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT" | tee --append $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
