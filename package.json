@@ -7,11 +7,16 @@
   "type": "module",
   "bin": {
     "generate": "output/generate.js",
-    "observe": "output/observe.js"
+    "observe": "output/observe.js",
+    "validate": "output/validate.js"
   },
   "files": [
-    "output/main.js",
-    "output/main.js.map"
+    "output/generate.js",
+    "output/generate.js.map",
+    "output/observe.js",
+    "output/observe.js.map",
+    "output/validate.js",
+    "output/validate.js.map"
   ],
   "scripts": {
     "build": "node build.js",
@@ -21,6 +26,7 @@
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
+    "prepublish": "yarn run build",
     "test": "tsc && node $(yarn bin mocha) output/*.test.js",
     "test:coverage": "tsc && c8 --reporter=html-spa node $(yarn bin mocha) output/*.test.js"
   },
