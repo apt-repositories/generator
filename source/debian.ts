@@ -85,5 +85,4 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   console.log(
     `Written '${packages.length.toString()}' package metadata files for component '${config.component}'.`,
   );
-  console.log("Done");
 };

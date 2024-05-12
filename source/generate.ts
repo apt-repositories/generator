@@ -21,6 +21,8 @@ const main = async () => {
     release: DEBIAN_RELEASE,
     root: DEBIAN_ROOT,
   });
+
+  console.log("Done.");
 };
 
 main().catch((error: unknown) => {

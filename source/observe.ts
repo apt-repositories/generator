@@ -33,7 +33,7 @@ const main = async () => {
     console.log(`Component '${DEBIAN_COMPONENT}' of '${observables}' merged successfully.`);
   }
 
-  console.log("Done");
+  console.log("Done.");
 };
 
 main().catch((error: unknown) => {
