@@ -73,6 +73,7 @@ jobs:
         id: pr
         uses: peter-evans/create-pull-request@6d6857d36972b65feb161a90e484f2984215f83e # v6
         with:
+          token: ${{ secrets.GH_ORG_TOKEN }}
           branch: "${{ env.DEBIAN_ROOT }}/${{ matrix.DEBIAN_RELEASE }}/${{ matrix.DEBIAN_COMPONENT }}"
           title: "chore(${{ env.DEBIAN_ROOT }}): ${{ matrix.DEBIAN_RELEASE }}/${{ matrix.DEBIAN_COMPONENT }}"
           labels: |
