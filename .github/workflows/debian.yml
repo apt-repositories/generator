@@ -60,16 +60,11 @@ jobs:
           DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
           DEBIAN_COMPONENT: ${{ matrix.DEBIAN_COMPONENT }}
         run: |
-          mkdir --parents apt/$DEBIAN_ROOT
-          cd apt/$DEBIAN_ROOT
-
-          rm -rf $DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
-          mkdir --parents $DEBIAN_RELEASE/$DEBIAN_COMPONENT
-          cd $DEBIAN_RELEASE/$DEBIAN_COMPONENT
+          rm -rf apt/$DEBIAN_ROOT/$DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
 
           set -o pipefail
           echo "log<<EOF" >> $GITHUB_OUTPUT
-          npx --package @apt-repositories/generator --command generate | tee --append $GITHUB_OUTPUT
+          npx --package @apt-repositories/generator --command generate "apt/$DEBIAN_ROOT/$DEBIAN_RELEASE/$DEBIAN_COMPONENT" | tee --append $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
