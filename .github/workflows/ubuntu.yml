@@ -83,6 +83,7 @@ jobs:
       - name: Make observable
         id: observable
         env:
+          DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
           DEBIAN_COMPONENT: ${{ matrix.DEBIAN_COMPONENT }}
           DEBIAN_OBSERVABLES: |
             ubuntu/${{ matrix.DEBIAN_RELEASE }}
