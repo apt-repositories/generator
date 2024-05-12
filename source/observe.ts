@@ -15,15 +15,15 @@ const main = async () => {
 
   await mkdir(OUTPUT_DIRECTORY, { recursive: true });
 
-  for (const observables of DEBIAN_OBSERVABLES) {
-    const observedPathComponent = join("apt", observables);
-    const observedPathDebs = resolve(join(observedPathComponent, DEBIAN_COMPONENT));
+  for (const observable of DEBIAN_OBSERVABLES) {
+    console.log(`Processing '${observable}'...`);
+    const observedPathDebs = resolve(join(observable, DEBIAN_COMPONENT));
 
-    console.log(`Reading '${observedPathDebs}'...`);
+    console.log(`  Reading contents of '${observedPathDebs}'...`);
     const debs = await readdir(observedPathDebs).catch(() => []);
 
     console.log(
-      `Component '${DEBIAN_COMPONENT}' of '${observables}' has '${debs.length.toString()}' packages.`,
+      `  Component '${DEBIAN_COMPONENT}' of '${observable}' has '${debs.length.toString()}' packages.`,
     );
     for (const deb of debs) {
       const observedPathDeb = join(observedPathDebs, deb);
@@ -33,7 +33,7 @@ const main = async () => {
       });
       await cp(observedPathDeb, targetPath);
     }
-    console.log(`Component '${DEBIAN_COMPONENT}' of '${observables}' merged successfully.`);
+    console.log(`  Component '${DEBIAN_COMPONENT}' of '${observable}' merged successfully.`);
   }
 
   console.log("Done.");
