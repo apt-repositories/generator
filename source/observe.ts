@@ -6,7 +6,7 @@ import { argv } from "node:process";
 
 const DEBIAN_COMPONENT = process.env.DEBIAN_COMPONENT ?? "main";
 const DEBIAN_OBSERVABLES = process.env.DEBIAN_OBSERVABLES?.split("\n").filter(Boolean) ?? [];
-const OUTPUT_DIRECTORY = `${process.env.OUTPUT_DIRECTORY ?? argv[2] ?? process.cwd()}/apt`;
+const OUTPUT_DIRECTORY = resolve(`${process.env.OUTPUT_DIRECTORY ?? argv[2] ?? process.cwd()}/apt`);
 
 const main = async () => {
   console.log(
