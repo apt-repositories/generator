@@ -82,12 +82,7 @@ jobs:
             ubuntu/${{ matrix.DEBIAN_RELEASE }}-updates
             ubuntu/${{ matrix.DEBIAN_RELEASE }}-security
         run: |
-          mkdir --parents apt/$DEBIAN_ROOT-observable
-          cd apt/$DEBIAN_ROOT-observable
-
-          rm -rf $DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
-          mkdir --parents $DEBIAN_RELEASE/$DEBIAN_COMPONENT
-          cd $GITHUB_WORKSPACE
+          rm -rf apt/$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
 
           set -o pipefail
           echo "log<<EOF" >> $GITHUB_OUTPUT
