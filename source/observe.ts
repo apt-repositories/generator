@@ -4,15 +4,8 @@ import { cp, mkdir, readdir, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { argv } from "node:process";
 
-const DEBIAN_RELEASE = process.env.DEBIAN_RELEASE ?? "bookworm";
 const DEBIAN_COMPONENT = process.env.DEBIAN_COMPONENT ?? "main";
-
-const DEBIAN_OBSERVABLES = [
-  `ubuntu/${DEBIAN_RELEASE}`,
-  `ubuntu/${DEBIAN_RELEASE}-updates`,
-  `ubuntu/${DEBIAN_RELEASE}-security`,
-];
-
+const DEBIAN_OBSERVABLES = process.env.DEBIAN_OBSERVABLES?.split("\n") ?? [];
 const OUTPUT_DIRECTORY = process.env.OUTPUT_DIRECTORY ?? argv[2] ?? process.cwd();
 
 const main = async () => {

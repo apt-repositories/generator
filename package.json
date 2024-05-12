@@ -5,7 +5,10 @@
   "license": "MIT",
   "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
   "type": "module",
-  "bin": "output/main.js",
+  "bin": {
+    "generate": "output/main.js",
+    "observe": "output/generate.js"
+  },
   "files": [
     "output/main.js",
     "output/main.js.map"
@@ -18,9 +21,6 @@
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
-    "metadata:generate": "node output/main.js $INIT_CWD",
-    "metadata:observable:debian": "node output/make-observable-debian.js $INIT_CWD",
-    "metadata:observable:ubuntu": "node output/make-observable-ubuntu.js $INIT_CWD",
     "test": "tsc && node $(yarn bin mocha) output/*.test.js",
     "test:coverage": "tsc && c8 --reporter=html-spa node $(yarn bin mocha) output/*.test.js"
   },
