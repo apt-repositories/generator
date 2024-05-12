@@ -42,21 +42,13 @@ jobs:
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
         with:
           repository: "apt-repositories/debian"
+          token: ${{ secrets.GH_ORG_TOKEN }}
 
       - name: Select NodeJS version
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
         with:
           # renovate: datasource=docker depName=node versioning=node
           node-version: "20.12.2"
-
-      - name: Enable Corepack
-        run: corepack enable
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Build
-        run: yarn build
 
       - name: Update metadata
         id: metadata
@@ -73,11 +65,12 @@ jobs:
 
           set -o pipefail
           echo "log<<EOF" >> $GITHUB_OUTPUT
-          yarn metadata:generate | tee --append $GITHUB_OUTPUT
+          npx --package @apt-repositories/generator --command generate | tee --append $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
       - name: Create Pull Request
+        id: pr
         uses: peter-evans/create-pull-request@6d6857d36972b65feb161a90e484f2984215f83e # v6
         with:
           branch: "${{ env.DEBIAN_ROOT }}/${{ matrix.DEBIAN_RELEASE }}/${{ matrix.DEBIAN_COMPONENT }}"
@@ -96,3 +89,8 @@ jobs:
             chore(${{ env.DEBIAN_ROOT }}): Metadata update for ${{ matrix.DEBIAN_RELEASE }}/${{ matrix.DEBIAN_COMPONENT }}
 
             Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Enable Pull Request Automerge
+        run: gh pr merge --merge --auto "${{ steps.pr.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
