@@ -9,6 +9,10 @@ const DEBIAN_OBSERVABLES = process.env.DEBIAN_OBSERVABLES?.split("\n").filter(Bo
 const OUTPUT_DIRECTORY = process.env.OUTPUT_DIRECTORY ?? argv[2] ?? process.cwd();
 
 const main = async () => {
+  console.log(
+    `Merging '${DEBIAN_OBSERVABLES.length.toString()}' observables into '${OUTPUT_DIRECTORY}'...`,
+  );
+
   await mkdir(OUTPUT_DIRECTORY, { recursive: true });
 
   for (const observables of DEBIAN_OBSERVABLES) {
