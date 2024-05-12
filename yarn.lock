@@ -30,8 +30,8 @@ __metadata:
     typescript-eslint: "npm:7.8.0"
     xz-decompress: "npm:0.2.1"
   bin:
-    generate: output/main.js
-    observe: output/generate.js
+    generate: output/generate.js
+    observe: output/observe.js
   languageName: unknown
   linkType: soft
 

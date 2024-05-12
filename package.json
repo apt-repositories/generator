@@ -6,8 +6,8 @@
   "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
   "type": "module",
   "bin": {
-    "generate": "output/main.js",
-    "observe": "output/generate.js"
+    "generate": "output/generate.js",
+    "observe": "output/observe.js"
   },
   "files": [
     "output/main.js",
