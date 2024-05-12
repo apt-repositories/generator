@@ -18,7 +18,10 @@ const main = async () => {
   for (const observables of DEBIAN_OBSERVABLES) {
     const observedPathComponent = join("apt", observables);
     const observedPathDebs = join(observedPathComponent, DEBIAN_COMPONENT);
+
+    console.log(`Reading '${observedPathDebs}'...`);
     const debs = await readdir(observedPathDebs).catch(() => []);
+
     console.log(
       `Component '${DEBIAN_COMPONENT}' of '${observables}' has '${debs.length.toString()}' packages.`,
     );
