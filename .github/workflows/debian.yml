@@ -120,3 +120,8 @@ jobs:
             chore(${{ env.DEBIAN_ROOT }}): Metadata update for ${{ matrix.DEBIAN_RELEASE }}/${{ matrix.DEBIAN_COMPONENT }}
 
             Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+      - name: Enable Pull Request Automerge
+        run: gh pr merge --merge --auto "1"
+        env:
+          GH_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
