@@ -17,7 +17,7 @@ const main = async () => {
 
   for (const observable of DEBIAN_OBSERVABLES) {
     console.log(`Processing '${observable}'...`);
-    const observedPathDebs = resolve(join(observable, DEBIAN_COMPONENT));
+    const observedPathDebs = resolve(join("apt", observable, DEBIAN_COMPONENT));
 
     console.log(`  Reading contents of '${observedPathDebs}'...`);
     const debs = await readdir(observedPathDebs).catch(() => []);
