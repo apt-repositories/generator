@@ -10,7 +10,7 @@ const OUTPUT_DIRECTORY = process.env.OUTPUT_DIRECTORY ?? argv[2] ?? process.cwd(
 
 const main = async () => {
   console.log(
-    `Merging '${DEBIAN_OBSERVABLES.length.toString()}' observables into '${OUTPUT_DIRECTORY}'...`,
+    `Merging '${DEBIAN_OBSERVABLES.length.toString()}' observables into '${OUTPUT_DIRECTORY}/apt'...`,
   );
 
   await mkdir(OUTPUT_DIRECTORY, { recursive: true });
