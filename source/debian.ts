@@ -1,3 +1,4 @@
+import { formatBytes } from "@oliversalzburg/js-utils/format/bytes.js";
 import { Package } from "apt-parser";
 import { Readable } from "node:stream";
 import { ReadableStream } from "node:stream/web";
@@ -49,7 +50,7 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
       `${debianMirrorUrl.toString()}/binary-${config.architecture}/Packages.gz`,
     );
     console.warn(
-      `Received status 404 response. Retrying with .gz fallback '${packagesUrl.toString()}'...`,
+      `  HTTP ${packagesResponse.status.toString()} response received. Retrying with .gz fallback '${packagesUrl.toString()}'...`,
     );
 
     packagesResponse = await fetch(packagesUrl);
@@ -59,12 +60,15 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
       );
     }
 
-    packagesText = getPackagesTextFromGZ(await packagesResponse.arrayBuffer());
+    const responsePayload = await packagesResponse.arrayBuffer();
+    packagesText = getPackagesTextFromGZ(responsePayload);
+
+    console.log(
+      `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength)})`,
+    );
   } else {
     throw new Error(`Received status ${packagesResponse.status.toString()} response. Failed.`);
   }
-
-  console.log(`Successful response received. (${packagesText.length.toString()} bytes)`);
 
   const cleanedData = packagesText
     .replaceAll(/\r\n|\r|\n/g, "\n")

@@ -31,7 +31,7 @@
     "test:coverage": "tsc && c8 --reporter=html-spa node $(yarn bin mocha) output/*.test.js"
   },
   "dependencies": {
-    "@oliversalzburg/js-utils": "0.0.29",
+    "@oliversalzburg/js-utils": "0.0.30",
     "apt-parser": "1.5.1",
     "xz-decompress": "0.2.1"
   },
