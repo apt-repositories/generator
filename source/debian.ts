@@ -42,9 +42,11 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   console.log(`Processing '${packagesUrl.toString()}'...`);
 
   let packagesResponse = await fetch(packagesUrl);
+  let responsePayload: ArrayBuffer;
   let packagesText: string;
   if (packagesResponse.status === 200) {
-    packagesText = await getPackagesTextFromXZ(await packagesResponse.arrayBuffer());
+    responsePayload = await packagesResponse.arrayBuffer();
+    packagesText = await getPackagesTextFromXZ(responsePayload);
   } else if (packagesResponse.status === 404) {
     packagesUrl = new URL(
       `${debianMirrorUrl.toString()}/binary-${config.architecture}/Packages.gz`,
@@ -60,15 +62,15 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
       );
     }
 
-    const responsePayload = await packagesResponse.arrayBuffer();
+    responsePayload = await packagesResponse.arrayBuffer();
     packagesText = getPackagesTextFromGZ(responsePayload);
-
-    console.log(
-      `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength)})`,
-    );
   } else {
     throw new Error(`Received status ${packagesResponse.status.toString()} response. Failed.`);
   }
+
+  console.log(
+    `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength)})`,
+  );
 
   const cleanedData = packagesText
     .replaceAll(/\r\n|\r|\n/g, "\n")
