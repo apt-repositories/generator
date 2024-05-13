@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
+import { measureAsync } from "@oliversalzburg/js-utils/performance.js";
 import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { argv } from "node:process";
@@ -16,18 +18,19 @@ const OUTPUT_DIRECTORY = resolve(process.env.OUTPUT_DIRECTORY ?? argv[2] ?? proc
 const main = async () => {
   console.log(`Generating metadata for '${DEBIAN_RELEASE}/${DEBIAN_COMPONENT}'...`);
 
-  await mkdir(OUTPUT_DIRECTORY, { recursive: true });
-
-  await debianMetadata(OUTPUT_DIRECTORY, {
-    architecture: DEBIAN_ARCHITECTURE,
-    component: DEBIAN_COMPONENT,
-    mirror: DEBIAN_MIRROR,
-    mirrorProtocol: DEBIAN_MIRROR_PROTOCOL,
-    release: DEBIAN_RELEASE,
-    root: DEBIAN_ROOT,
+  const [, duration] = await measureAsync(async () => {
+    await mkdir(OUTPUT_DIRECTORY, { recursive: true });
+    await debianMetadata(OUTPUT_DIRECTORY, {
+      architecture: DEBIAN_ARCHITECTURE,
+      component: DEBIAN_COMPONENT,
+      mirror: DEBIAN_MIRROR,
+      mirrorProtocol: DEBIAN_MIRROR_PROTOCOL,
+      release: DEBIAN_RELEASE,
+      root: DEBIAN_ROOT,
+    });
   });
 
-  console.log("Done.");
+  console.log(`Done. (${formatMilliseconds(duration)})`);
 };
 
 main().catch((error: unknown) => {

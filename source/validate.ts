@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
+import { measureAsync } from "@oliversalzburg/js-utils/performance.js";
 import { readFile, readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
 import { argv } from "node:process";
@@ -36,15 +38,19 @@ const validateJsonRecursive = async (root: string): Promise<[boolean, number]> =
 };
 
 const main = async () => {
-  const [hasFailed, checkedCount] = await validateJsonRecursive(OUTPUT_DIRECTORY);
+  console.log(`Validating all files in '${OUTPUT_DIRECTORY}' to be valid JSON...`);
 
-  console.log(`Checked '${checkedCount.toString()}' files in '${OUTPUT_DIRECTORY}'.`);
+  const [, duration] = await measureAsync(async () => {
+    const [hasFailed, checkedCount] = await validateJsonRecursive(OUTPUT_DIRECTORY);
 
-  if (hasFailed) {
-    throw new Error("Validation failed.");
-  }
+    console.log(`Checked '${checkedCount.toString()}' files in '${OUTPUT_DIRECTORY}'.`);
 
-  console.log("Done.");
+    if (hasFailed) {
+      throw new Error("Validation failed.");
+    }
+  });
+
+  console.log(`Done. (${formatMilliseconds(duration)})`);
 };
 
 main().catch((error: unknown) => {
