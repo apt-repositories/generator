@@ -1,5 +1,4 @@
 .yarn/
-apt/
 coverage/
 node_modules/
 output/
