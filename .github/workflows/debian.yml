@@ -97,8 +97,7 @@ jobs:
           title: "chore(${{ env.DEBIAN_ROOT }}): ${{ matrix.DEBIAN_RELEASE }}/${{ matrix.DEBIAN_COMPONENT }}"
           labels: |
             metadata
-            ${{ env.DEBIAN_ROOT }}
-            ${{ env.DEBIAN_ROOT }}:${{ matrix.DEBIAN_RELEASE }}
+            ${{ matrix.DEBIAN_RELEASE }}
           body: |
             ## Metadata Log
             ```shell
