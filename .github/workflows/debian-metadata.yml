@@ -71,7 +71,7 @@ jobs:
           set +o pipefail
 
       - name: Make observable
-        if: ${{ inputs.DEBIAN_OBSERVABLES }} != ''
+        if: inputs.DEBIAN_OBSERVABLES
         id: observable
         env:
           DEBIAN_OBSERVABLES: ${{ inputs.DEBIAN_OBSERVABLES }}
@@ -110,7 +110,7 @@ jobs:
             Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Enable Pull Request Automerge
-        if: ${{ steps.pr.outputs.pull-request-number }}
+        if: steps.pr.outputs.pull-request-number
         run: gh pr merge --merge --auto "${{ steps.pr.outputs.pull-request-number }}"
         env:
           GH_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
