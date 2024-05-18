@@ -84,7 +84,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
-      - name: Create Pull Request
+      - name: Create pull request
         id: pr
         uses: peter-evans/create-pull-request@6d6857d36972b65feb161a90e484f2984215f83e # v6
         with:
@@ -109,7 +109,7 @@ jobs:
 
             Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-      - name: Enable Pull Request Automerge
+      - name: Auto-merge pull request
         if: steps.pr.outputs.pull-request-number
         run: gh pr merge --merge --auto "${{ steps.pr.outputs.pull-request-number }}"
         env:
