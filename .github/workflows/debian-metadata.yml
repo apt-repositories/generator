@@ -102,7 +102,7 @@ jobs:
 
             ## Observable Log
             ```shell
-            ${{ steps.observable.outputs.log }}
+            ${{ steps.observable.outcome != 'skipped' && steps.observable.outputs.log || 'skipped' }}
             ```
           commit-message: |
             chore(${{ env.DEBIAN_ROOT }}): Metadata update for ${{ env.DEBIAN_RELEASE }}/${{ env.DEBIAN_COMPONENT }}
