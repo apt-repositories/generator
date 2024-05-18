@@ -27,7 +27,8 @@ on:
         type: string
         default: ""
     secrets:
-      - GH_ORG_TOKEN
+      GH_ORG_TOKEN:
+        required: true
 
 jobs:
   metadata:
