@@ -28,6 +28,8 @@ jobs:
         debian/${{ matrix.DEBIAN_RELEASE }}
         debian/${{ matrix.DEBIAN_RELEASE }}-updates
         debian-security/${{ matrix.DEBIAN_RELEASE }}-security
+    secrets:
+      GH_ORG_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
     strategy:
       fail-fast: false
       matrix:
