@@ -1,4 +1,4 @@
-name: Debian Metadata
+name: Metadata
 
 on:
   workflow_call:

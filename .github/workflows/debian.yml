@@ -11,14 +11,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  metadata:
-    name: Metadata
+  debian:
+    name: Debian
     uses: "./.github/workflows/debian-metadata.yml"
     permissions:
       contents: write
       pull-requests: write
     with:
-      repository: apt-repositories-debian
+      repository: apt-repositories/debian
       DEBIAN_MIRROR: deb.debian.org
       DEBIAN_ROOT: debian
       DEBIAN_ARCHITECTURE: amd64
