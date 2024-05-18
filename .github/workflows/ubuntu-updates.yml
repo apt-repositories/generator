@@ -13,7 +13,7 @@ concurrency:
 jobs:
   ubuntu-updates:
     name: Ubuntu Updates
-    uses: "./.github/workflows/debian-metadata.yml"
+    uses: ./.github/workflows/metadata.yml
     permissions:
       contents: write
       pull-requests: write

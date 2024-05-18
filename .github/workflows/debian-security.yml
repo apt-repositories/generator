@@ -13,7 +13,7 @@ concurrency:
 jobs:
   debian-security:
     name: Debian Security
-    uses: "./.github/workflows/debian-metadata.yml"
+    uses: ./.github/workflows/metadata.yml
     permissions:
       contents: write
       pull-requests: write

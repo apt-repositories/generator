@@ -13,7 +13,7 @@ concurrency:
 jobs:
   ubuntu:
     name: Ubuntu
-    uses: "./.github/workflows/debian-metadata.yml"
+    uses: ./.github/workflows/metadata.yml
     permissions:
       contents: write
       pull-requests: write
