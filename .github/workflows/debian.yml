@@ -14,6 +14,9 @@ jobs:
   metadata:
     name: Metadata
     uses: "./.github/workflows/debian-metadata.yml"
+    permissions:
+      contents: write
+      pull-requests: write
     with:
       repository: apt-repositories-debian
       DEBIAN_MIRROR: deb.debian.org
