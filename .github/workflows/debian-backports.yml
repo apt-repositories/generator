@@ -38,3 +38,6 @@ jobs:
           - contrib
           - non-free
           - non-free-firmware
+        exclude:
+          - DEBIAN_RELEASE: bullseye-updates
+            DEBIAN_COMPONENT: non-free-firmware
