@@ -1,0 +1,40 @@
+name: Debian Backports
+
+on:
+  schedule:
+    # nightly at 3:00
+    - cron: "3 0 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: debian-backports
+  cancel-in-progress: true
+
+jobs:
+  debian-backports:
+    name: Debian Backports
+    uses: ./.github/workflows/metadata.yml
+    permissions:
+      contents: write
+      pull-requests: write
+    with:
+      repository: apt-repositories/debian
+      DEBIAN_MIRROR: deb.debian.org
+      DEBIAN_ROOT: debian
+      DEBIAN_ARCHITECTURE: amd64
+      DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
+      DEBIAN_COMPONENT: ${{ matrix.DEBIAN_COMPONENT }}
+    secrets:
+      GH_ORG_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
+    strategy:
+      fail-fast: false
+      matrix:
+        DEBIAN_RELEASE:
+          - bookworm-backports
+          - bullseye-backports
+          - trixie-backports
+        DEBIAN_COMPONENT:
+          - main
+          - contrib
+          - non-free
+          - non-free-firmware
