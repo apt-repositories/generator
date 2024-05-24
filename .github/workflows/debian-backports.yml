@@ -39,5 +39,5 @@ jobs:
           - non-free
           - non-free-firmware
         exclude:
-          - DEBIAN_RELEASE: bullseye-updates
+          - DEBIAN_RELEASE: bullseye-backports
             DEBIAN_COMPONENT: non-free-firmware
