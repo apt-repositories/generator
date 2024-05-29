@@ -43,7 +43,7 @@ const main = async () => {
   const [, duration] = await measureAsync(async () => {
     const [hasFailed, checkedCount] = await validateJsonRecursive(OUTPUT_DIRECTORY);
 
-    console.log(`Checked '${checkedCount.toString()}' files in '${OUTPUT_DIRECTORY}'.`);
+    console.log(`Checked '${checkedCount.toLocaleString()}' files in '${OUTPUT_DIRECTORY}'.`);
 
     if (hasFailed) {
       throw new Error("Validation failed.");
