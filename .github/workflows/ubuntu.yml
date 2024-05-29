@@ -24,6 +24,10 @@ jobs:
       DEBIAN_ARCHITECTURE: amd64
       DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
       DEBIAN_COMPONENT: ${{ matrix.DEBIAN_COMPONENT }}
+      DEBIAN_OBSERVABLES: |
+        ubuntu/${{ matrix.DEBIAN_RELEASE }}
+        ubuntu/${{ matrix.DEBIAN_RELEASE }}-updates
+        ubuntu/${{ matrix.DEBIAN_RELEASE }}-security
     secrets:
       GH_ORG_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
     strategy:
