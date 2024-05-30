@@ -61,12 +61,15 @@ jobs:
 
       - name: Update metadata
         id: metadata
+        env:
+          # renovate: datasource=npm depName=@apt-repositories/generator versioning=semver
+          GENERATOR_VERSION: "0.0.22"
         run: |
           rm -rf apt/$DEBIAN_ROOT/$DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
 
           set -o pipefail
           echo "log<<EOF" >> $GITHUB_OUTPUT
-          npx --package @apt-repositories/generator --command generate "apt/$DEBIAN_ROOT/$DEBIAN_RELEASE/$DEBIAN_COMPONENT" | tee --append $GITHUB_OUTPUT
+          npx --package @apt-repositories/generator@$GENERATOR_VERSION --command generate "apt/$DEBIAN_ROOT/$DEBIAN_RELEASE/$DEBIAN_COMPONENT" | tee --append $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
@@ -75,12 +78,14 @@ jobs:
         id: observable
         env:
           DEBIAN_OBSERVABLES: ${{ inputs.DEBIAN_OBSERVABLES }}
+          # renovate: datasource=npm depName=@apt-repositories/generator versioning=semver
+          GENERATOR_VERSION: "0.0.22"
         run: |
           rm -rf apt/$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
 
           set -o pipefail
           echo "log<<EOF" >> $GITHUB_OUTPUT
-          npx --package @apt-repositories/generator --command observe "apt/$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT" | tee --append $GITHUB_OUTPUT
+          npx --package @apt-repositories/generator@$GENERATOR_VERSION --command observe "apt/$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT" | tee --append $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
