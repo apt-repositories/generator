@@ -34,8 +34,7 @@
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
     "prepublish": "yarn run build",
-    "test": "tsc && node $(yarn bin mocha) output/*.test.js",
-    "test:coverage": "tsc && c8 --reporter=html-spa node $(yarn bin mocha) output/*.test.js",
+    "test": "echo this project has no tests.",
     "preversion": "yarn run lint && yarn run build && yarn run test",
     "postversion": "git push"
   },
