@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
 import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
 import { measureAsync } from "@oliversalzburg/js-utils/performance.js";
 import { cp, mkdir, readdir, rm } from "node:fs/promises";
@@ -12,7 +13,7 @@ const OUTPUT_DIRECTORY = process.env.OUTPUT_DIRECTORY ?? argv[2] ?? process.cwd(
 
 const main = async () => {
   console.log(
-    `Merging '${DEBIAN_OBSERVABLES.length.toString()}' observables into '${OUTPUT_DIRECTORY}'...`,
+    `Merging '${formatCount(DEBIAN_OBSERVABLES.length)}' observables into '${OUTPUT_DIRECTORY}'...`,
   );
 
   const [, duration] = await measureAsync(async () => {
@@ -26,7 +27,7 @@ const main = async () => {
       const debs = await readdir(observedPathDebs).catch(() => []);
 
       console.log(
-        `  Component '${DEBIAN_COMPONENT}' of '${observable}' has '${debs.length.toString()}' packages.`,
+        `  Component '${DEBIAN_COMPONENT}' of '${observable}' has '${formatCount(debs.length)}' packages.`,
       );
       console.log(`  Merging '${observedPathDebs}' into '${OUTPUT_DIRECTORY}'...`);
       for (const deb of debs) {

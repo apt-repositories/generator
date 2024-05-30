@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
 import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
 import { measureAsync } from "@oliversalzburg/js-utils/performance.js";
 import { readFile, readdir, stat } from "node:fs/promises";
@@ -43,7 +44,7 @@ const main = async () => {
   const [, duration] = await measureAsync(async () => {
     const [hasFailed, checkedCount] = await validateJsonRecursive(OUTPUT_DIRECTORY);
 
-    console.log(`Checked '${checkedCount.toLocaleString()}' files in '${OUTPUT_DIRECTORY}'.`);
+    console.log(`Checked '${formatCount(checkedCount)}' files in '${OUTPUT_DIRECTORY}'.`);
 
     if (hasFailed) {
       throw new Error("Validation failed.");

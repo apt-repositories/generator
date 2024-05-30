@@ -1,4 +1,5 @@
 import { formatBytes } from "@oliversalzburg/js-utils/format/bytes.js";
+import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
 import { Package } from "apt-parser";
 import { Readable } from "node:stream";
 import { ReadableStream } from "node:stream/web";
@@ -89,6 +90,6 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   }
 
   console.log(
-    `  Written '${packages.length.toString()}' package metadata files for component '${config.component}' to '${outputDirectory}'.`,
+    `  Written '${formatCount(packages.length)}' package metadata files for component '${config.component}' to '${outputDirectory}'.`,
   );
 };
