@@ -4,6 +4,13 @@
   "version": "0.0.22",
   "license": "MIT",
   "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apt-repositories/generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/apt-repositories/generator/issues"
+  },
   "type": "module",
   "bin": {
     "generate": "output/generate.js",
@@ -28,7 +35,9 @@
     "lint:tsc": "tsc --noEmit",
     "prepublish": "yarn run build",
     "test": "tsc && node $(yarn bin mocha) output/*.test.js",
-    "test:coverage": "tsc && c8 --reporter=html-spa node $(yarn bin mocha) output/*.test.js"
+    "test:coverage": "tsc && c8 --reporter=html-spa node $(yarn bin mocha) output/*.test.js",
+    "preversion": "yarn run lint && yarn run build && yarn run test",
+    "postversion": "git push"
   },
   "dependencies": {
     "@oliversalzburg/js-utils": "0.0.44",

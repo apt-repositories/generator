@@ -3,6 +3,10 @@ name: QA
 on:
   pull_request:
   push:
+    branches:
+      - "**" # matches every branch
+      - "!main" # excludes main
+  workflow_call:
 
 jobs:
   qa:
@@ -27,11 +31,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Lint ESLint
-        run: yarn lint:eslint
-      - name: Lint TSC
-        run: yarn lint:tsc
-      - name: Lint Prettier
-        run: yarn lint:prettier
+      - name: Lint
+        run: yarn lint
       - name: Build
         run: yarn build
+      - name: Test
+        run: yarn test
