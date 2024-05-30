@@ -70,7 +70,7 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   }
 
   console.log(
-    `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength)})`,
+    `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength, { space: false })})`,
   );
 
   const cleanedData = packagesText
