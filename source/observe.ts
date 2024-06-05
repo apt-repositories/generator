@@ -26,8 +26,15 @@ const main = async () => {
       console.log(`  Reading contents of '${observedPathDebs}'...`);
       const debs = await readdir(observedPathDebs).catch(() => []);
 
+      if (debs.length === 0) {
+        console.log(
+          `  Component '${DEBIAN_COMPONENT}' of '${observable}' contains zero packages and is skipped.`,
+        );
+        continue;
+      }
+
       console.log(
-        `  Component '${DEBIAN_COMPONENT}' of '${observable}' has '${formatCount(debs.length)}' packages.`,
+        `  Component '${DEBIAN_COMPONENT}' of '${observable}' contains '${formatCount(debs.length)}' packages.`,
       );
       console.log(`  Merging '${observedPathDebs}' into '${OUTPUT_DIRECTORY}'...`);
       for (const deb of debs) {
