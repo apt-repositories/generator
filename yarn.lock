@@ -28,7 +28,7 @@ __metadata:
     prettier-plugin-organize-imports: "npm:3.2.4"
     typescript: "npm:5.4.5"
     typescript-eslint: "npm:7.13.0"
-    xz-decompress: "npm:0.2.1"
+    xz-decompress: "npm:0.2.2"
   bin:
     generate: output/generate.js
     observe: output/observe.js
@@ -3344,10 +3344,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xz-decompress@npm:0.2.1":
-  version: 0.2.1
-  resolution: "xz-decompress@npm:0.2.1"
-  checksum: 10c0/8d70889e08b3ed56225667825373496ad8519fc45ca04e12bff9f3ba51afa030170afda75238bbfb4f537519dcedf048c38d90040c95dd7ea78df9349a773aa1
+"xz-decompress@npm:0.2.2":
+  version: 0.2.2
+  resolution: "xz-decompress@npm:0.2.2"
+  checksum: 10c0/60455ef356953967cf94051005f6ec0e63613a43db50ff4482e2d3172325a14cf9432877a978785bf415e9ec8120d4428004ccdcee9c1c9f468e2ec4d04a569a
   languageName: node
   linkType: hard
 

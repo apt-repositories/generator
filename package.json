@@ -41,7 +41,7 @@
   "dependencies": {
     "@oliversalzburg/js-utils": "0.0.46",
     "apt-parser": "1.5.1",
-    "xz-decompress": "0.2.1"
+    "xz-decompress": "0.2.2"
   },
   "devDependencies": {
     "@eslint/js": "9.4.0",
