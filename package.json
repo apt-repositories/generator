@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@eslint/js": "9.5.0",
-    "@oliversalzburg/eslint-config": "0.0.6",
+    "@oliversalzburg/eslint-config": "0.0.10",
     "@types/chai": "4.3.16",
     "@types/eslint": "8.56.10",
     "@types/mocha": "10.0.6",
@@ -53,7 +53,7 @@
     "c8": "10.1.2",
     "chai": "5.1.1",
     "esbuild": "0.21.5",
-    "eslint": "9.4.0",
+    "eslint": "9.5.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-jsdoc": "48.2.12",
     "eslint-plugin-tsdoc": "0.3.0",
