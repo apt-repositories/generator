@@ -7,12 +7,44 @@ import { gunzipSync } from "node:zlib";
 import xz from "xz-decompress";
 import { writePackageMetadata } from "./tools.js";
 
+/**
+ * Defines a source of a single Debian APT component.
+ */
 export interface DebianConfiguration {
+  /**
+   * The protocol through which we can reach the mirror.
+   * @example https
+   */
   mirrorProtocol: string;
+
+  /**
+   * The hostname of the mirror where we can fetch packages from.
+   * @example deb.debian.org
+   */
   mirror: string;
+
+  /**
+   * The release we're referring to. This is usually a codename of Debian release.
+   * @example bookworm
+   */
   release: string;
+
+  /**
+   * The root directory on the mirror.
+   * @example debian
+   */
   root: string;
+
+  /**
+   * The component we're referring to.
+   * @example main
+   */
   component: string;
+
+  /**
+   * The architecture we're referring to.
+   * @example amd64
+   */
   architecture: string;
 }
 
@@ -32,6 +64,11 @@ const getPackagesTextFromXZ = async (packagesRaw: ArrayBuffer) => {
   return packagesText;
 };
 
+/**
+ * Download the latest metadata for the given configuration and write it to disk.
+ * @param outputDirectory - The directory to write the new metadata to.
+ * @param config - The configuration to process.
+ */
 export const debianMetadata = async (outputDirectory: string, config: DebianConfiguration) => {
   const debianMirrorUrl = new URL(
     `${config.mirrorProtocol}://${config.mirror}/${config.root}/dists/${config.release}/${config.component}`,
@@ -40,7 +77,7 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
     `${debianMirrorUrl.toString()}/binary-${config.architecture}/Packages.xz`,
   );
 
-  console.log(`  Processing '${packagesUrl.toString()}'...`);
+  process.stderr.write(`  Processing '${packagesUrl.toString()}'...\n`);
 
   let packagesResponse = await fetch(packagesUrl);
   let responsePayload: ArrayBuffer;
@@ -52,8 +89,8 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
     packagesUrl = new URL(
       `${debianMirrorUrl.toString()}/binary-${config.architecture}/Packages.gz`,
     );
-    console.warn(
-      `  HTTP ${packagesResponse.status.toString()} response received. Retrying with .gz fallback '${packagesUrl.toString()}'...`,
+    process.stderr.write(
+      `  HTTP ${packagesResponse.status.toString()} response received. Retrying with .gz fallback '${packagesUrl.toString()}'...\n`,
     );
 
     packagesResponse = await fetch(packagesUrl);
@@ -69,8 +106,8 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
     throw new Error(`Received status ${packagesResponse.status.toString()} response. Failed.`);
   }
 
-  console.log(
-    `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength, { space: false })})`,
+  process.stderr.write(
+    `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
   );
 
   const cleanedData = packagesText
@@ -89,7 +126,7 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
     await writePackageMetadata(outputDirectory, deb);
   }
 
-  console.log(
-    `  Written '${formatCount(packages.length)}' package metadata files for component '${config.component}' to '${outputDirectory}'.`,
+  process.stderr.write(
+    `  Written '${formatCount(packages.length)}' package metadata files for component '${config.component}' to '${outputDirectory}'.\n`,
   );
 };

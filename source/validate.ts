@@ -28,8 +28,8 @@ const validateJsonRecursive = async (root: string): Promise<[boolean, number]> =
     const content = await readFile(path);
     try {
       JSON.parse(content.toString());
-    } catch (error) {
-      console.error(`Failed to parse JSON file '${path}'`);
+    } catch (_error) {
+      process.stderr.write(`Failed to parse JSON file '${path}'\n`);
       hasFailed = true;
     }
     ++checkedCount;
@@ -39,19 +39,21 @@ const validateJsonRecursive = async (root: string): Promise<[boolean, number]> =
 };
 
 const main = async () => {
-  console.log(`Validating all files in '${OUTPUT_DIRECTORY}' to be valid JSON...`);
+  process.stderr.write(`Validating all files in '${OUTPUT_DIRECTORY}' to be valid JSON...\n`);
 
   const [, duration] = await measureAsync(async () => {
     const [hasFailed, checkedCount] = await validateJsonRecursive(OUTPUT_DIRECTORY);
 
-    console.log(`Checked '${formatCount(checkedCount)}' files in '${OUTPUT_DIRECTORY}'.`);
+    process.stderr.write(
+      `Checked '${formatCount(checkedCount)}' files in '${OUTPUT_DIRECTORY}'.\n`,
+    );
 
     if (hasFailed) {
       throw new Error("Validation failed.");
     }
   });
 
-  console.log(`Done. (${formatMilliseconds(duration)})`);
+  process.stderr.write(`Done. (${formatMilliseconds(duration)})\n`);
 };
 
 main().catch((error: unknown) => {

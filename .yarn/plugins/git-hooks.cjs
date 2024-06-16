@@ -6,7 +6,7 @@ module.exports = {
   factory: require => ({
     hooks: {
       async afterAllInstalled(project) {
-        console.log("git-hooks: Installing pre-commit hook...");
+        process.stderr.write("git-hooks: Installing pre-commit hook...\n");
 
         const thisDirectory = __dirname;
         const monoRepoRoot = path.resolve(thisDirectory, "../..");
@@ -14,7 +14,7 @@ module.exports = {
         const hooksDirectory = path.resolve(gitDirectory, "hooks");
         const configFilename = path.join(monoRepoRoot, "lint-staged.config.js");
 
-        console.log(`git-hooks: Installing hook into '${hooksDirectory}'...`);
+        process.stderr.write(`git-hooks: Installing hook into '${hooksDirectory}'...\n`);
 
         const hookFile = `#!/bin/sh
 echo "Running lint-staged..."
@@ -25,7 +25,7 @@ yarn lint-staged --config ${configFilename}
         await fs.writeFile(hookFilename, hookFile, "utf-8");
         await fs.chmod(hookFilename, 0o755);
 
-        console.log("git-hooks: Done.");
+        process.stderr.write("git-hooks: Done.\n");
       },
     },
   }),

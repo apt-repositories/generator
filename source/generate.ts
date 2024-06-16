@@ -15,7 +15,7 @@ const DEBIAN_ARCHITECTURE = process.env.DEBIAN_ARCHITECTURE ?? "amd64";
 const OUTPUT_DIRECTORY = process.env.OUTPUT_DIRECTORY ?? argv[2] ?? process.cwd();
 
 const main = async () => {
-  console.log(`Generating metadata for '${DEBIAN_RELEASE}/${DEBIAN_COMPONENT}'...`);
+  process.stderr.write(`Generating metadata for '${DEBIAN_RELEASE}/${DEBIAN_COMPONENT}'...\n`);
 
   const [, duration] = await measureAsync(async () => {
     await mkdir(OUTPUT_DIRECTORY, { recursive: true });
@@ -29,7 +29,7 @@ const main = async () => {
     });
   });
 
-  console.log(`Done. (${formatMilliseconds(duration)})`);
+  process.stderr.write(`Done. (${formatMilliseconds(duration)})\n`);
 };
 
 main().catch((error: unknown) => {

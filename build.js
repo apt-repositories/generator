@@ -11,4 +11,4 @@ esbuild
     sourcemap: true,
     target: "node20",
   })
-  .catch(console.error);
+  .catch(process.stderr.write);
