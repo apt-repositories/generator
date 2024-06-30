@@ -78,10 +78,16 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   );
 
   process.stderr.write(`  Processing '${packagesUrl.toString()}'...\n`);
+  let packagesResponse = await fetch(packagesUrl, {
+    headers: {
+      accept: "*/*",
+      "user-agent": "apt-repositories-generator/v0 (https://github.com/apt-repositories/generator)",
+    },
+  });
 
-  let packagesResponse = await fetch(packagesUrl);
   let responsePayload: ArrayBuffer;
   let packagesText: string;
+
   if (packagesResponse.status === 200) {
     responsePayload = await packagesResponse.arrayBuffer();
     process.stderr.write(
