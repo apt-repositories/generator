@@ -49,7 +49,7 @@ const main = async () => {
     const [hasFailed, checkedBytes, checkedCount] = await validateJsonRecursive(OUTPUT_DIRECTORY);
 
     process.stderr.write(
-      `Checked '${formatCount(checkedCount)}' files totalling '${formatBytes(checkedBytes)}' in '${OUTPUT_DIRECTORY}'.\n`,
+      `Checked '${formatCount(checkedCount)}' files totalling '${formatBytes(checkedBytes, { space: false })}' in '${OUTPUT_DIRECTORY}'.\n`,
     );
 
     if (hasFailed) {
