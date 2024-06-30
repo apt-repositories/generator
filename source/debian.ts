@@ -118,7 +118,12 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   const packageChunks = cleanedData.split("\n\n");
   const packages = packageChunks
     .map(chunk => {
-      return chunk.trim().length > 0 ? new Package(chunk) : null;
+      try {
+        return chunk.trim().length > 0 ? new Package(chunk) : null;
+      } catch (error) {
+        process.stderr.write(`Error while parsing chunk: '${chunk}'`);
+        throw error;
+      }
     })
     .filter(Boolean) as Array<Package>;
 
