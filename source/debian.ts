@@ -84,6 +84,9 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   let packagesText: string;
   if (packagesResponse.status === 200) {
     responsePayload = await packagesResponse.arrayBuffer();
+    process.stderr.write(
+      `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
+    );
     packagesText = await getPackagesTextFromXZ(responsePayload);
   } else if (packagesResponse.status === 404) {
     packagesUrl = new URL(
@@ -101,14 +104,13 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
     }
 
     responsePayload = await packagesResponse.arrayBuffer();
+    process.stderr.write(
+      `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
+    );
     packagesText = getPackagesTextFromGZ(responsePayload);
   } else {
     throw new Error(`Received status ${packagesResponse.status.toString()} response. Failed.`);
   }
-
-  process.stderr.write(
-    `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
-  );
 
   const cleanedData = packagesText
     .replaceAll(/\r\n|\r|\n/g, "\n")
