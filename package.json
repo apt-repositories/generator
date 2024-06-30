@@ -34,7 +34,7 @@
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
     "nextversion": "./.scripts/manifest-version.cjs",
-    "prepublish": "yarn run build",
+    "prepublishOnly": "yarn run build",
     "test": "echo this project has no tests.",
     "preversion": "yarn run lint && yarn run build && yarn run test",
     "postversion": "git push"
