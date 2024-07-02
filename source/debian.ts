@@ -158,9 +158,9 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
             .map(([name, value], _index) => `< ${name}: ${String(value)}`)
             .join("\n")}
 
-          Failed chunk from XZ/GZ response payload:
+          Failed chunk from XZ/GZ response payload renders as:
           ${chunk}
-          `);
+          \n`);
         return false;
       }
 
@@ -174,10 +174,12 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
           Chunk hexdump:
           ${[
             ...chunkify(
-              chunk.split("").map(char => char.charCodeAt(0).toString(16)),
+              chunk.split("").map(char => char.charCodeAt(0).toString(16).padStart(2, "0")),
               16,
             ),
-          ].map(line => `${line.join(" ")}\n`)}
+          ]
+            .map(line => line.join(" "))
+            .join("\n")}
           `);
       }
 
