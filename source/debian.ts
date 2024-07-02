@@ -128,7 +128,11 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
     .map(chunk => {
       if (chunk.includes("HTTP/1.1 400 Bad Request")) {
         throw new Error(
-          `Received status 200 response from '${config.mirror}', but the response body indicates an HTTP error. This is likely caused by an invalid CDN node cache entry (${packagesResponse.headers.get("x-served-by")}).`,
+          `Received status 200 response from '${config.mirror}', but the response body indicates an HTTP error. This is likely caused by an invalid CDN node cache entry.\n${Object.entries(
+            packagesResponse.headers,
+          )
+            .map(([name, value], _index) => `< ${name}: ${value}`)
+            .join("\n")}`,
         );
       }
 
