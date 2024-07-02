@@ -4,6 +4,7 @@ import { Package } from "apt-parser";
 import { Readable } from "node:stream";
 import { ReadableStream } from "node:stream/web";
 import { gunzipSync } from "node:zlib";
+import { outdent } from "outdent";
 import xz from "xz-decompress";
 import { writePackageMetadata } from "./tools.js";
 
@@ -127,13 +128,18 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   const packages = packageChunks
     .map(chunk => {
       if (chunk.includes("HTTP/1.1 400 Bad Request")) {
-        throw new Error(
-          `Received status 200 response from '${config.mirror}', but the response body indicates an HTTP error. This is likely caused by an invalid CDN node cache entry.\n${Object.entries(
-            packagesResponse.headers,
-          )
+        throw new Error(outdent`
+          Received status 200 response from '${config.mirror}', but the response body indicates an HTTP error.
+          This is potentially caused by an invalid CDN node cache entry, but requires further analysis.
+
+          Response headers:
+          ${Object.entries(packagesResponse.headers)
             .map(([name, value], _index) => `< ${name}: ${value}`)
-            .join("\n")}`,
-        );
+            .join("\n")}
+
+          Response body:
+          ${packagesText}
+          `);
       }
 
       try {
