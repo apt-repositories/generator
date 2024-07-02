@@ -138,7 +138,7 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
             .join("\n")}
 
           Chunks extracted from XZ/GZ response payload:
-          ${packageChunks.map(chunk => `${chunk}\n---CHUNK---\n`)}
+          ${packageChunks.join("\n---CHUNK---\n")}
           `);
       }
 
