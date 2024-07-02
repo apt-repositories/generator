@@ -133,7 +133,7 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
           This is potentially caused by an invalid CDN node cache entry, but requires further analysis.
 
           Response headers:
-          ${Object.entries(packagesResponse.headers.entries())
+          ${Object.entries(Object.fromEntries(packagesResponse.headers.entries()))
             .map(([name, value], _index) => `< ${name}: ${value}`)
             .join("\n")}
 
