@@ -135,10 +135,11 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   const packageChunks = cleanedData.split("\n\n");
   const packages = packageChunks
     .map(chunk => {
-      if (chunk.includes("HTTP/1.1 400 Bad Request")) {
-        throw new Error(outdent`
-          Received status 200 response from '${config.mirror}', but the response body indicates an HTTP error.
+      if (chunk.includes("Connection: close")) {
+        process.stderr.write(outdent`
+          Received status 200 response from '${config.mirror}', but the response payload contained unexpected HTTP response fragments.
           This is potentially caused by an invalid CDN node cache entry, but requires further analysis.
+          This problematic chunk will be ignored. Parsing continues with the next chunk.
 
           Response headers:
           ${Object.entries(packagesResponse.headers)
@@ -148,6 +149,7 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
           Chunks extracted from XZ/GZ response payload:
           ${packageChunks.join("\n---CHUNK---\n")}
           `);
+        return false;
       }
 
       try {
