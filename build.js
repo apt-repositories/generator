@@ -4,7 +4,7 @@ esbuild
   .build({
     bundle: true,
     entryPoints: ["./source/generate.ts", "./source/observe.ts", "./source/validate.ts"],
-    external: ["xz-decompress"],
+    external: ["node:assert", "xz-decompress"],
     format: "esm",
     outdir: "./output",
     platform: "node",
