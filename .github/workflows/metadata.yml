@@ -72,7 +72,7 @@ jobs:
         id: metadata
         env:
           # renovate: datasource=npm depName=@apt-repositories/generator versioning=semver
-          GENERATOR_VERSION: "0.0.43"
+          GENERATOR_VERSION: "0.0.44"
         run: |
           rm -rf apt/$DEBIAN_ROOT/$DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
 
