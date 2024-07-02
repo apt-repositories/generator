@@ -79,7 +79,7 @@ jobs:
         env:
           DEBIAN_OBSERVABLES: ${{ inputs.DEBIAN_OBSERVABLES }}
           # renovate: datasource=npm depName=@apt-repositories/generator versioning=semver
-          GENERATOR_VERSION: "0.0.32"
+          GENERATOR_VERSION: "0.0.47"
         run: |
           rm -rf apt/$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
 
