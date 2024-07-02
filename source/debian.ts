@@ -137,8 +137,8 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
             .map(([name, value], _index) => `< ${name}: ${value}`)
             .join("\n")}
 
-          Response body:
-          ${packagesText}
+          Response body chunks:
+          ${packageChunks.map(chunk => `${chunk}\n---CHUNK---\n`)}
           `);
       }
 
