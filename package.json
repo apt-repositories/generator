@@ -43,6 +43,7 @@
     "@oliversalzburg/js-utils": "0.0.57",
     "apt-parser": "1.5.1",
     "outdent": "0.8.0",
+    "undici": "6.19.2",
     "xz-decompress": "0.2.2"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ import { Readable } from "node:stream";
 import { ReadableStream } from "node:stream/web";
 import { gunzipSync } from "node:zlib";
 import { outdent } from "outdent";
+import { request } from "undici";
 import xz from "xz-decompress";
 import { writePackageMetadata } from "./tools.js";
 
@@ -79,7 +80,8 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   );
 
   process.stderr.write(`  Processing '${packagesUrl.toString()}'...\n`);
-  let packagesResponse = await fetch(packagesUrl, {
+
+  let packagesResponse = await request(packagesUrl, {
     headers: {
       accept: "*/*",
       host: "deb.debian.org",
@@ -90,34 +92,41 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   let responsePayload: ArrayBuffer;
   let packagesText: string;
 
-  if (packagesResponse.status === 200) {
-    responsePayload = await packagesResponse.arrayBuffer();
+  if (packagesResponse.statusCode === 200) {
+    responsePayload = await packagesResponse.body.arrayBuffer();
     process.stderr.write(
-      `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
+      `  HTTP ${packagesResponse.statusCode.toString()} response received. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
     );
     packagesText = await getPackagesTextFromXZ(responsePayload);
-  } else if (packagesResponse.status === 404) {
+  } else if (packagesResponse.statusCode === 404) {
     packagesUrl = new URL(
       `${debianMirrorUrl.toString()}/binary-${config.architecture}/Packages.gz`,
     );
     process.stderr.write(
-      `  HTTP ${packagesResponse.status.toString()} response received. Retrying with .gz fallback '${packagesUrl.toString()}'...\n`,
+      `  HTTP ${packagesResponse.statusCode.toString()} response received. Retrying with .gz fallback '${packagesUrl.toString()}'...\n`,
     );
 
-    packagesResponse = await fetch(packagesUrl);
-    if (packagesResponse.status !== 200) {
+    packagesResponse = await request(packagesUrl, {
+      headers: {
+        accept: "*/*",
+        host: "deb.debian.org",
+        "user-agent":
+          "apt-repositories-generator/v0 (https://github.com/apt-repositories/generator)",
+      },
+    });
+    if (packagesResponse.statusCode !== 200) {
       throw new Error(
-        `Received status ${packagesResponse.status.toString()} response for fallback. Failed.`,
+        `Received status ${packagesResponse.statusCode.toString()} response for fallback. Failed.`,
       );
     }
 
-    responsePayload = await packagesResponse.arrayBuffer();
+    responsePayload = await packagesResponse.body.arrayBuffer();
     process.stderr.write(
-      `  HTTP ${packagesResponse.status.toString()} response received. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
+      `  HTTP ${packagesResponse.statusCode.toString()} response received. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
     );
     packagesText = getPackagesTextFromGZ(responsePayload);
   } else {
-    throw new Error(`Received status ${packagesResponse.status.toString()} response. Failed.`);
+    throw new Error(`Received status ${packagesResponse.statusCode.toString()} response. Failed.`);
   }
 
   const cleanedData = packagesText
@@ -134,8 +143,8 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
           This is potentially caused by an invalid CDN node cache entry, but requires further analysis.
 
           Response headers:
-          ${Object.entries(Object.fromEntries(packagesResponse.headers.entries()))
-            .map(([name, value], _index) => `< ${name}: ${value}`)
+          ${Object.entries(packagesResponse.headers)
+            .map(([name, value], _index) => `< ${name}: ${String(value)}`)
             .join("\n")}
 
           Chunks extracted from XZ/GZ response payload:
