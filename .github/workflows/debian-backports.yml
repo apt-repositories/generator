@@ -19,7 +19,7 @@ jobs:
       pull-requests: write
     with:
       repository: apt-repositories/debian
-      DEBIAN_MIRROR: deb.debian.org
+      DEBIAN_MIRROR: ftp.us.debian.org
       DEBIAN_ROOT: debian
       DEBIAN_ARCHITECTURE: amd64
       DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
