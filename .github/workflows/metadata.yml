@@ -45,6 +45,15 @@ jobs:
       DEBIAN_COMPONENT: ${{ inputs.DEBIAN_COMPONENT }}
 
     steps:
+      - name: Download raw subject
+        run: wget https://${{ env.DEBIAN_MIRROR }}/${{ env.DEBIAN_ROOT }}/dists/${{ env.DEBIAN_RELEASE }}/${{ env.DEBIAN_COMPONENT }}/binary-amd64/Packages.xz
+
+      - name: Store raw subject
+        uses: actions/upload-artifact@v4
+        with:
+          name: Packages.xz
+          path: Packages.xz
+
       - name: Checkout
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
         with:
