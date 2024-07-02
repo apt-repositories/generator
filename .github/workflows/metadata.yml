@@ -51,7 +51,7 @@ jobs:
       - name: Store raw subject
         uses: actions/upload-artifact@v4
         with:
-          name: Packages.xz
+          name: "${{ env.DEBIAN_RELEASE }}-${{ env.DEBIAN_COMPONENT }}-Packages.xz"
           path: Packages.xz
 
       - name: Checkout
