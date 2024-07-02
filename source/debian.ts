@@ -82,6 +82,7 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
   let packagesResponse = await fetch(packagesUrl, {
     headers: {
       accept: "*/*",
+      host: "deb.debian.org",
       "user-agent": "apt-repositories-generator/v0 (https://github.com/apt-repositories/generator)",
     },
   });
