@@ -7,6 +7,7 @@ esbuild
     external: ["xz-decompress"],
     format: "esm",
     outdir: "./output",
+    packages: "bundle",
     platform: "node",
     sourcemap: true,
     target: "node20",
