@@ -9,6 +9,18 @@ import { request } from "undici";
 import xz from "xz-decompress";
 import { writePackageMetadata } from "./tools.js";
 
+const chunkify = function* <T>(itr: Iterable<T>, size: number) {
+  let chunk = [];
+  for (const v of itr) {
+    chunk.push(v);
+    if (chunk.length === size) {
+      yield chunk;
+      chunk = [];
+    }
+  }
+  if (chunk.length) yield chunk;
+};
+
 /**
  * Defines a source of a single Debian APT component.
  */
@@ -146,10 +158,27 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
             .map(([name, value], _index) => `< ${name}: ${String(value)}`)
             .join("\n")}
 
-          Chunks extracted from XZ/GZ response payload:
-          ${packageChunks.join("\n---CHUNK---\n")}
+          Failed chunk from XZ/GZ response payload:
+          ${chunk}
           `);
         return false;
+      }
+
+      if (chunk.includes("Package: ") && !chunk.startsWith("Package: ")) {
+        process.stderr.write(outdent`
+          Found potentially unsafe chunk!
+
+          Chunk renders as:
+          ${chunk}
+
+          Chunk hexdump:
+          ${[
+            ...chunkify(
+              chunk.split("").map(char => char.charCodeAt(0).toString(16)),
+              16,
+            ),
+          ].map(line => `${line.join(" ")}\n`)}
+          `);
       }
 
       try {
