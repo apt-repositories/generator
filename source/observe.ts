@@ -72,10 +72,15 @@ const main = async () => {
       );
 
       for (const deb of debs) {
+        const observedPathDeb = join(observedPathDebs, deb);
+        if (deb === ".gitkeep") {
+          process.stderr.write(`  Ignoring '${observedPathDeb}'.\n`);
+          continue;
+        }
+
         const catalogEntry = debCatalog.get(deb) ?? new Map<string, string>();
         debCatalog.set(deb, catalogEntry);
 
-        const observedPathDeb = join(observedPathDebs, deb);
         const content = await readFile(observedPathDeb, "utf-8");
         const { version: contentVersion } = JSON.parse(content) as { version: string };
         catalogEntry.set(contentVersion, observedPathDeb);
