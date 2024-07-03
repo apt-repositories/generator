@@ -1,6 +1,8 @@
 import { formatBytes } from "@oliversalzburg/js-utils/format/bytes.js";
 import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
 import { Package } from "apt-parser";
+import { mkdir, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import { Readable } from "node:stream";
 import { ReadableStream } from "node:stream/web";
 import { gunzipSync } from "node:zlib";
@@ -191,6 +193,10 @@ export const debianMetadata = async (outputDirectory: string, config: DebianConf
       }
     })
     .filter(Boolean) as Array<Package>;
+
+  // Even for empty components, we want to create the folder to produce a stable API.
+  await mkdir(outputDirectory, { recursive: true });
+  await writeFile(join(outputDirectory, ".gitkeep"), "");
 
   for (const deb of packages) {
     await writePackageMetadata(outputDirectory, deb);
