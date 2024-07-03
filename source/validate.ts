@@ -20,6 +20,8 @@ const validateJsonRecursive = async (root: string): Promise<[boolean, number, nu
 
     if (file === ".gitkeep") {
       process.stderr.write(`  Ignoring '${path}'.\n`);
+      checkedCount++;
+      continue;
     }
 
     const pathStat = await stat(path);
