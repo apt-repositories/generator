@@ -79,7 +79,7 @@ jobs:
         id: observable
         env:
           DEBIAN_OBSERVABLES: ${{ inputs.DEBIAN_OBSERVABLES }}
-          OUTPUT_DIRECTORY: "apt/$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT"
+          OUTPUT_DIRECTORY: "apt/${{ env.DEBIAN_ROOT }}-observable/${{ env.DEBIAN_RELEASE }}/${{ env.DEBIAN_COMPONENT }}"
         run: |
           rm -rf $OUTPUT_DIRECTORY || true
 
