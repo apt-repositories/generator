@@ -79,12 +79,13 @@ jobs:
         id: observable
         env:
           DEBIAN_OBSERVABLES: ${{ inputs.DEBIAN_OBSERVABLES }}
+          OUTPUT_DIRECTORY: "apt/$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT"
         run: |
-          rm -rf apt/$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
+          rm -rf $OUTPUT_DIRECTORY || true
 
           set -o pipefail
           echo "log<<EOF" >> $GITHUB_OUTPUT
-          2>&1 npx --package @apt-repositories/generator@$GENERATOR_VERSION --command observe "apt/$DEBIAN_ROOT-observable/$DEBIAN_RELEASE/$DEBIAN_COMPONENT" | tee --append $GITHUB_OUTPUT
+          2>&1 npx --package @apt-repositories/generator@$GENERATOR_VERSION --command observe | tee --append $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 

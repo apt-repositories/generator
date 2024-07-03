@@ -52,9 +52,10 @@ const main = async () => {
 
       const observedPathDebs = join("apt", observable, DEBIAN_COMPONENT);
       if (!existsSync(observedPathDebs)) {
-        throw new Error(
-          `Observable '${observable}', expected at '${observedPathDebs}', was not found.`,
+        process.stderr.write(
+          `  Observable '${observable}', expected at '${observedPathDebs}', was not found. Continuing...\n`,
         );
+        continue;
       }
 
       process.stderr.write(`  Reading contents of '${observedPathDebs}'...\n`);
