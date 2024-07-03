@@ -17,6 +17,11 @@ const validateJsonRecursive = async (root: string): Promise<[boolean, number, nu
   let checkedCount = 0;
   for (const file of files) {
     const path = join(root, file);
+
+    if (file === ".gitkeep") {
+      process.stderr.write(`  Ignoring '${path}'.\n`);
+    }
+
     const pathStat = await stat(path);
     if (pathStat.isDirectory()) {
       const [subFailed, subBytes, subCount] = await validateJsonRecursive(path);
