@@ -3,7 +3,7 @@
 import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
 import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
 import { measureAsync } from "@oliversalzburg/js-utils/performance.js";
-import { cp, mkdir, readdir, rm } from "node:fs/promises";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { argv } from "node:process";
 
@@ -19,8 +19,12 @@ const main = async () => {
   const [, duration] = await measureAsync(async () => {
     await mkdir(OUTPUT_DIRECTORY, { recursive: true });
 
+    // Maps packages to versions to file locations.
+    const debCatalog = new Map<string, Map<string, string>>();
+
     for (const observable of DEBIAN_OBSERVABLES) {
       process.stderr.write(`Processing '${observable}'...\n`);
+
       const observedPathDebs = join("apt", observable, DEBIAN_COMPONENT);
 
       process.stderr.write(`  Reading contents of '${observedPathDebs}'...\n`);
@@ -36,18 +40,28 @@ const main = async () => {
       process.stderr.write(
         `  Component '${DEBIAN_COMPONENT}' of '${observable}' contains '${formatCount(debs.length)}' packages.\n`,
       );
-      process.stderr.write(`  Merging '${observedPathDebs}' into '${OUTPUT_DIRECTORY}'...\n`);
+
       for (const deb of debs) {
+        const catalogEntry = debCatalog.get(deb) ?? new Map<string, string>();
+        debCatalog.set(deb, catalogEntry);
+
         const observedPathDeb = join(observedPathDebs, deb);
-        const targetPath = join(OUTPUT_DIRECTORY, deb);
-        await rm(targetPath).catch(() => {
-          /* ignored */
-        });
-        await cp(observedPathDeb, targetPath);
+        const content = await readFile(observedPathDeb, "utf-8");
+        const { version: contentVersion } = JSON.parse(content) as { version: string };
+        catalogEntry.set(contentVersion, deb);
       }
-      process.stderr.write(
-        `  Component '${DEBIAN_COMPONENT}' of '${observable}' merged successfully.\n`,
+    }
+
+    process.stderr.write(
+      `Writing '${formatCount(debCatalog.size)}' entries to '${OUTPUT_DIRECTORY}'...\n`,
+    );
+    for (const [deb, versions] of debCatalog.entries()) {
+      const targetPath = join(OUTPUT_DIRECTORY, deb);
+      const debContents = await Promise.all(
+        [...versions.values()].map(version => readFile(version, "utf-8")),
       );
+      const debBundle = `[${debContents.join(",")}]`;
+      await writeFile(targetPath, debBundle);
     }
   });
 

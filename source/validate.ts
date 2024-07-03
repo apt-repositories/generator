@@ -29,9 +29,9 @@ const validateJsonRecursive = async (root: string): Promise<[boolean, number, nu
     }
 
     checkedBytes += pathStat.size;
-    const content = await readFile(path);
+    const content = await readFile(path, "utf-8");
     try {
-      JSON.parse(content.toString());
+      JSON.parse(content);
     } catch (_error) {
       process.stderr.write(`Failed to parse JSON file '${path}'\n`);
       hasFailed = true;
