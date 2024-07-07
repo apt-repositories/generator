@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
-import { measureAsync } from "@oliversalzburg/js-utils/performance.js";
+import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
 import { mkdir } from "node:fs/promises";
 import { argv } from "node:process";
 import { debianMetadata } from "./debian.js";

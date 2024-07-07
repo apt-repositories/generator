@@ -11,7 +11,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:9.6.0"
     "@oliversalzburg/eslint-config": "npm:0.0.17"
-    "@oliversalzburg/js-utils": "npm:0.0.57"
+    "@oliversalzburg/js-utils": "npm:0.0.58-dev.24"
     "@types/chai": "npm:4.3.16"
     "@types/eslint": "npm:8.56.10"
     "@types/mocha": "npm:10.0.7"
@@ -385,10 +385,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@oliversalzburg/js-utils@npm:0.0.57":
-  version: 0.0.57
-  resolution: "@oliversalzburg/js-utils@npm:0.0.57"
-  checksum: 10c0/3fc768a9c50038ccff78b3dcd77bb562f34a058abbf0dffa8088de63caa9517a8c83f278507559522b32f07cfa171da9827c0773b28e767dc4100569f75c0533
+"@oliversalzburg/js-utils@npm:0.0.58-dev.24":
+  version: 0.0.58-dev.24
+  resolution: "@oliversalzburg/js-utils@npm:0.0.58-dev.24"
+  checksum: 10c0/9997bc5ed5d49613b0be21f93d243ed986dd7a815f41e9b6b7459d85096568bfba0c9b8a5cf6b40ba93c5823abd509113a16ccc0a5ce9b36e08f8f027cfff32d
   languageName: node
   linkType: hard
 
