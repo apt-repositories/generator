@@ -40,7 +40,7 @@
     "postversion": "git push"
   },
   "dependencies": {
-    "@oliversalzburg/js-utils": "0.0.58-dev.24",
+    "@oliversalzburg/js-utils": "0.0.58",
     "apt-parser": "1.5.1",
     "outdent": "0.8.0",
     "undici": "6.19.2",
