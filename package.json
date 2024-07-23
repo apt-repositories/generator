@@ -48,15 +48,15 @@
   },
   "devDependencies": {
     "@eslint/js": "9.7.0",
-    "@oliversalzburg/eslint-config": "0.0.21",
+    "@oliversalzburg/eslint-config": "0.0.22",
     "@types/chai": "4.3.16",
-    "@types/eslint": "8.56.10",
+    "@types/eslint": "8.56.11",
     "@types/mocha": "10.0.7",
     "@types/node": "20.14.11",
     "esbuild": "0.23.0",
     "eslint": "9.7.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-jsdoc": "48.7.0",
+    "eslint-plugin-jsdoc": "48.8.3",
     "eslint-plugin-tsdoc": "0.3.0",
     "globals": "15.8.0",
     "lint-staged": "15.2.7",
@@ -65,7 +65,7 @@
     "prettier-plugin-organize-imports": "4.0.0",
     "prettier-plugin-sh": "0.14.0",
     "typescript": "5.5.3",
-    "typescript-eslint": "8.0.0-alpha.45"
+    "typescript-eslint": "8.0.0-alpha.52"
   },
   "packageManager": "yarn@4.3.1"
 }
