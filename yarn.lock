@@ -31,7 +31,7 @@ __metadata:
     prettier-plugin-sh: "npm:0.14.0"
     typescript: "npm:5.5.3"
     typescript-eslint: "npm:8.0.0-alpha.52"
-    undici: "npm:6.19.2"
+    undici: "npm:6.19.4"
     xz-decompress: "npm:0.2.2"
   bin:
     generate: output/generate.js
@@ -2419,10 +2419,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici@npm:6.19.2":
-  version: 6.19.2
-  resolution: "undici@npm:6.19.2"
-  checksum: 10c0/3b7b9238c0c84fd90742422fb12844a29e33e922d2c5f722f626090ca1f1ec93596ccec9be1814bb0e923e28682d2080a17d17a4afe373897b9770ef25a64d97
+"undici@npm:6.19.4":
+  version: 6.19.4
+  resolution: "undici@npm:6.19.4"
+  checksum: 10c0/d6cb7227893140abab3c216bd2817f24a34270b23be316ff9ddbdbb18e3b528e29e0a20cd33ab1bc0d3f604d652e7baf3f39f6760470b3027d83bc6270f90e43
   languageName: node
   linkType: hard
 
