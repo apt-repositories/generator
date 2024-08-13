@@ -20,7 +20,7 @@ __metadata:
     esbuild: "npm:0.23.0"
     eslint: "npm:9.9.0"
     eslint-config-prettier: "npm:9.1.0"
-    eslint-plugin-jsdoc: "npm:50.2.0"
+    eslint-plugin-jsdoc: "npm:50.2.1"
     eslint-plugin-tsdoc: "npm:0.3.0"
     globals: "npm:15.9.0"
     lint-staged: "npm:15.2.9"
@@ -1044,9 +1044,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:50.2.0":
-  version: 50.2.0
-  resolution: "eslint-plugin-jsdoc@npm:50.2.0"
+"eslint-plugin-jsdoc@npm:50.2.1":
+  version: 50.2.1
+  resolution: "eslint-plugin-jsdoc@npm:50.2.1"
   dependencies:
     "@es-joy/jsdoccomment": "npm:~0.48.0"
     are-docs-informative: "npm:^0.0.2"
@@ -1061,7 +1061,7 @@ __metadata:
     synckit: "npm:^0.9.1"
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
-  checksum: 10c0/0c0ce9fc54ee98903851f78eda27a88d2c23c30799ac1e29be8a043b1d9178fe3a717e977cb2305838aa56b3634c3c18fdcccb1bd7af87ab75c99a1664367bb0
+  checksum: 10c0/65186e025b518b2ed0616683adbf16e321ccaf89c065912e98773130ea8cd7dff857aa1087be38120c9dc91c418291aa8a4e3f526a1e0fac3a3d8dd3692f3425
   languageName: node
   linkType: hard
 
