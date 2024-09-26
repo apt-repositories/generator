@@ -40,7 +40,7 @@ env:
 jobs:
   metadata:
     name: Metadata
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       pull-requests: write
