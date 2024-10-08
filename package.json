@@ -51,7 +51,7 @@
     "@oliversalzburg/eslint-config": "1.1.0",
     "@types/chai": "5.0.0",
     "@types/eslint": "9.6.1",
-    "@types/mocha": "10.0.8",
+    "@types/mocha": "10.0.9",
     "@types/node": "20.16.10",
     "esbuild": "0.24.0",
     "eslint": "9.12.0",
