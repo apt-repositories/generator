@@ -34,7 +34,6 @@ jobs:
           - focal-updates
           - jammy-updates
           - lunar-updates
-          - mantic-updates
           - noble-updates
           - oracular-updates
           - trusty-updates

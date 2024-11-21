@@ -34,7 +34,6 @@ jobs:
           - focal-security
           - jammy-security
           - lunar-security
-          - mantic-security
           - noble-security
           - oracular-security
           - trusty-security

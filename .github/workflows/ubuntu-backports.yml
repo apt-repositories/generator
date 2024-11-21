@@ -34,7 +34,6 @@ jobs:
           - focal-backports
           - jammy-backports
           - lunar-backports
-          - mantic-backports
           - noble-backports
           - oracular-backports
           - trusty-backports
