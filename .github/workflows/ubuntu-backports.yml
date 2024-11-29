@@ -33,7 +33,6 @@ jobs:
           - bionic-backports
           - focal-backports
           - jammy-backports
-          - lunar-backports
           - noble-backports
           - oracular-backports
           - trusty-backports

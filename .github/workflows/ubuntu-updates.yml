@@ -33,7 +33,6 @@ jobs:
           - bionic-updates
           - focal-updates
           - jammy-updates
-          - lunar-updates
           - noble-updates
           - oracular-updates
           - trusty-updates

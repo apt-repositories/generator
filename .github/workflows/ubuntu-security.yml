@@ -33,7 +33,6 @@ jobs:
           - bionic-security
           - focal-security
           - jammy-security
-          - lunar-security
           - noble-security
           - oracular-security
           - trusty-security
