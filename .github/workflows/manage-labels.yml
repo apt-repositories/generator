@@ -21,4 +21,4 @@ jobs:
       - uses: oliversalzburg/action-label-manager@a9a10781220dedf23a23b0029a05ad56f1c68163 # v1.0.1
         with:
           force: true
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
