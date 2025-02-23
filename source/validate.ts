@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
+import { readFile, readdir, stat } from "node:fs/promises";
+import { join } from "node:path";
+import { argv } from "node:process";
 import { formatBytes } from "@oliversalzburg/js-utils/format/bytes.js";
 import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
 import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
 import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
-import { readFile, readdir, stat } from "node:fs/promises";
-import { join } from "node:path";
-import { argv } from "node:process";
 
 const OUTPUT_DIRECTORY = process.env.OUTPUT_DIRECTORY ?? argv[2] ?? process.cwd();
 

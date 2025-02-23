@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import { assertExists, mustExist } from "@oliversalzburg/js-utils/data/nil.js";
-import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
-import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
-import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
 import { existsSync } from "node:fs";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { argv } from "node:process";
+import { assertExists, mustExist } from "@oliversalzburg/js-utils/data/nil.js";
+import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
+import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
+import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
 
 const args = argv.slice(2).reduce<Record<string, Array<string>>>((args, arg) => {
   if (!arg.startsWith("--")) {

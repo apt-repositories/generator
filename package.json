@@ -29,9 +29,8 @@
     "build": "node build.js",
     "clean": "rm -rf ./output",
     "lint": "yarn run lint:all",
-    "lint:all": "yarn run lint:eslint && yarn run lint:prettier && yarn run lint:tsc",
-    "lint:eslint": "eslint .",
-    "lint:prettier": "prettier --check .",
+    "lint:all": "yarn run lint:biome && yarn run lint:tsc",
+    "lint:biome": "biome check .",
     "lint:tsc": "tsc --noEmit",
     "nextversion": "./.scripts/manifest-version.cjs",
     "prepack": "yarn run build",
@@ -47,25 +46,13 @@
     "xz-decompress": "0.2.2"
   },
   "devDependencies": {
-    "@eslint/js": "9.21.0",
-    "@oliversalzburg/eslint-config": "2.0.0",
+    "@biomejs/biome": "1.9.4",
     "@types/chai": "5.0.1",
-    "@types/eslint": "9.6.1",
     "@types/mocha": "10.0.10",
     "@types/node": "22.13.5",
     "esbuild": "0.25.0",
-    "eslint": "9.21.0",
-    "eslint-config-prettier": "10.0.1",
-    "eslint-plugin-jsdoc": "50.6.3",
-    "eslint-plugin-tsdoc": "0.4.0",
-    "globals": "16.0.0",
     "lint-staged": "15.4.3",
-    "prettier": "3.5.1",
-    "prettier-package-json": "2.8.0",
-    "prettier-plugin-organize-imports": "4.1.0",
-    "prettier-plugin-sh": "0.15.0",
-    "typescript": "5.7.3",
-    "typescript-eslint": "8.24.1"
+    "typescript": "5.7.3"
   },
   "packageManager": "yarn@4.6.0"
 }

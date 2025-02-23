@@ -1,6 +1,6 @@
-import { Package } from "apt-parser";
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { Package } from "apt-parser";
 
 /**
  * Writes package metadata to a target directory.

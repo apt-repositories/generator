@@ -20,3 +20,7 @@ observe: /tmp/debian output
 		--observable=debian-security/bookworm-security \
 		--input=/tmp/debian \
 		--output=/tmp/debian/apt/debian-observable/bookworm/main
+
+.PHONE: pretty
+pretty:
+	yarn biome check --write --no-errors-on-unmatched

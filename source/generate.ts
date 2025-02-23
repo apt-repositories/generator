@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
-import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
 import { mkdir } from "node:fs/promises";
 import { argv } from "node:process";
+import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
+import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
 import { debianMetadata } from "./debian.js";
 
 const DEBIAN_MIRROR_PROTOCOL = process.env.DEBIAN_MIRROR_PROTOCOL ?? "http";

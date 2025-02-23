@@ -1,11 +1,11 @@
-import { formatBytes } from "@oliversalzburg/js-utils/format/bytes.js";
-import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
-import { Package } from "apt-parser";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Readable } from "node:stream";
 import { ReadableStream } from "node:stream/web";
 import { gunzipSync } from "node:zlib";
+import { formatBytes } from "@oliversalzburg/js-utils/format/bytes.js";
+import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
+import { Package } from "apt-parser";
 import { outdent } from "outdent";
 import { request } from "undici";
 import xz from "xz-decompress";
