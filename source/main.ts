@@ -1,6 +1,7 @@
+#!/usr/bin/env node
+
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { argv } from "node:process";
 import { retry } from "@oliversalzburg/js-utils/async/async.js";
 import { isNil, mustExist } from "@oliversalzburg/js-utils/data/nil.js";
 import { errorToString, unknownToError } from "@oliversalzburg/js-utils/errors/error-serializer.js";

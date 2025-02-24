@@ -80,11 +80,6 @@ jobs:
             ```shell
             ${{ steps.metadata.outputs.log }}
             ```
-
-            ## Observable Log
-            ```shell
-            ${{ steps.observable.outcome != 'skipped' && steps.observable.outputs.log || 'skipped' }}
-            ```
           commit-message: |
             chore: Update Metadata from Snapshot
 
