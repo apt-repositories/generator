@@ -62,12 +62,13 @@ jobs:
 
           set -o pipefail
           echo "log<<EOF" >> $GITHUB_OUTPUT
-          2>&1 npx --package @apt-repositories/generator@$GENERATOR_VERSION | tee --append $GITHUB_OUTPUT
+          2>&1 npx @apt-repositories/generator@$GENERATOR_VERSION | tee --append $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
       - name: Create pull request
         id: pr
+        if: false
         uses: peter-evans/create-pull-request@dd2324fc52d5d43c699a5636bcf19fceaa70c284 # v7
         with:
           token: ${{ secrets.GH_ORG_TOKEN }}
