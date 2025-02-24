@@ -85,7 +85,6 @@ export interface Configuration {
   mirrorProtocol: "http" | "https";
   root: string;
   baseDir: string;
-  baseId: string;
   architecture: "amd64";
   rootRelease: string;
   release: DebianRelease | DebianReleaseSecurity | UbuntuRelease;

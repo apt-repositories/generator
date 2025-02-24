@@ -1,11 +1,6 @@
-import { existsSync } from "node:fs";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { argv } from "node:process";
-import { assertExists, mustExist } from "@oliversalzburg/js-utils/data/nil.js";
 import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
-import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
-import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
 import { Configuration } from "./types.js";
 
 export const mergeToObservable = async (
@@ -20,12 +15,12 @@ export const mergeToObservable = async (
       // All releases in this task are expected to share the same output directory.
       outputDirectory = join(
         release.outputDirectory,
-        `${release.baseId}-observable`,
+        `${release.root}-observable`,
         release.rootRelease,
         release.component,
       );
       if (target === undefined) {
-        target = `${release.baseId}/${release.rootRelease}/${release.component}`;
+        target = `${release.root}/${release.rootRelease}/${release.component}`;
         process.stderr.write(`  ? ${target}: Generating catalog...\n`);
       }
 

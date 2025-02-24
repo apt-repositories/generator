@@ -8,9 +8,7 @@ import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
 import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
 import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
 
-const OUTPUT_DIRECTORY = process.env.OUTPUT_DIRECTORY ?? argv[2] ?? process.cwd();
-
-const validateJsonRecursive = async (root: string): Promise<[boolean, number, number]> => {
+export const validateJsonRecursive = async (root: string): Promise<[boolean, number, number]> => {
   const files = await readdir(root);
   let hasFailed = false;
   let checkedBytes = 0;
@@ -48,25 +46,3 @@ const validateJsonRecursive = async (root: string): Promise<[boolean, number, nu
 
   return [hasFailed, checkedBytes, checkedCount];
 };
-
-const main = async () => {
-  process.stderr.write(`Validating all files in '${OUTPUT_DIRECTORY}' to be valid JSON...\n`);
-
-  const [, duration] = await measureAsync(async () => {
-    const [hasFailed, checkedBytes, checkedCount] = await validateJsonRecursive(OUTPUT_DIRECTORY);
-
-    process.stderr.write(
-      `Checked '${formatCount(checkedCount)}' files totalling '${formatBytes(checkedBytes, { space: false })}' in '${OUTPUT_DIRECTORY}'.\n`,
-    );
-
-    if (hasFailed) {
-      throw new Error("Validation failed.");
-    }
-  });
-
-  process.stderr.write(`Done. (${formatMilliseconds(duration)})\n`);
-};
-
-main().catch((error: unknown) => {
-  throw error;
-});

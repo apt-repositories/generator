@@ -9,12 +9,6 @@ export interface DebianConfiguration {
   baseDir: string;
 
   /**
-   * The name of the main distribution. If we target 'debian-security', the baseId is 'debian'.
-   * @example debian
-   */
-  baseId: string;
-
-  /**
    * The protocol through which we can reach the mirror.
    * @example https
    */
@@ -31,6 +25,12 @@ export interface DebianConfiguration {
    * @example bookworm-updates
    */
   release: string;
+
+  /**
+   * The name of the main distribution. If we target 'debian-security', the baseId is 'debian'.
+   * @example debian
+   */
+  root: string;
 
   /**
    * The release we're referring to.  This is usually a codename of Debian release.

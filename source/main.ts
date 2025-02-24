@@ -13,14 +13,16 @@ import { mergeToObservable } from "./observable.js";
 import { repositories } from "./repositories.js";
 import { writePackageMetadata } from "./tools.js";
 import { Configuration } from "./types.js";
+import { validateJsonRecursive } from "./validate.js";
 
 const BASE_ID_ONLY = process.env["BASE_ID_ONLY"];
 const OBSERVE_ONLY = (process.env["OBSERVE_ONLY"] ?? "") !== "";
+const VALIDATE_ONLY = (process.env["VALIDATE_ONLY"] ?? "") !== "";
 
 const serializeConfiguration = () => {
   const tasks = new Array<Configuration>();
   for (const [id, repository] of Object.entries(repositories)) {
-    if (!isNil(BASE_ID_ONLY) && id !== BASE_ID_ONLY) {
+    if (!isNil(BASE_ID_ONLY) && repository.root !== BASE_ID_ONLY) {
       continue;
     }
 
@@ -37,7 +39,6 @@ const serializeConfiguration = () => {
           outputDirectory: repository.outputDirectory,
           release,
           rootRelease: release.includes("-") ? release.substring(0, release.indexOf("-")) : release,
-          baseId: id.includes("-") ? id.substring(0, id.indexOf("-")) : id,
           repositoryId: id,
           root: repository.root,
           baseDir: repository.baseDir,
@@ -52,7 +53,7 @@ const serializeConfiguration = () => {
 const toObservableTasks = (completedTasks: Array<Configuration>) => {
   const tasks = new Map<string, Array<Configuration>>();
   for (const task of completedTasks) {
-    const key = `${task.targetRepository}/${task.baseId}/${task.rootRelease}/${task.component}`;
+    const key = `${task.targetRepository}/${task.root}/${task.rootRelease}/${task.component}`;
     if (!tasks.has(key)) {
       tasks.set(key, new Array<Configuration>());
     }
@@ -68,7 +69,6 @@ const toObservableTasks = (completedTasks: Array<Configuration>) => {
       root: task.root,
       baseDir: task.baseDir,
       rootRelease: task.rootRelease,
-      baseId: task.baseId,
       targetRepository: task.targetRepository,
     });
   }
@@ -76,7 +76,20 @@ const toObservableTasks = (completedTasks: Array<Configuration>) => {
   return tasks;
 };
 
+const validate = () => {
+  for (const [, repository] of Object.entries(repositories)) {
+    if (!isNil(BASE_ID_ONLY) && repository.root !== BASE_ID_ONLY) {
+      continue;
+    }
+    return validateJsonRecursive(repository.outputDirectory);
+  }
+};
+
 const main = async () => {
+  if (VALIDATE_ONLY) {
+    return validate();
+  }
+
   process.stderr.write(`Generating tasks...\n`);
   const tasks = serializeConfiguration();
 
