@@ -15,7 +15,7 @@ import { writePackageMetadata } from "./tools.js";
 import { Configuration } from "./types.js";
 
 const BASE_ID_ONLY = process.env["BASE_ID_ONLY"];
-const OBSERVE_ONLY = process.env["OBSERVE_ONLY"] ?? "" !== "";
+const OBSERVE_ONLY = (process.env["OBSERVE_ONLY"] ?? "") !== "";
 
 const serializeConfiguration = () => {
   const tasks = new Array<Configuration>();
