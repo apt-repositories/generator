@@ -40,7 +40,7 @@ jobs:
       pull-requests: write
     env:
       BASE_ID_ONLY: ${{ inputs.baseIdOnly }}
-      OBSERVE_ONLY: ${{ inputs.observeOnly }}
+      OBSERVE_ONLY: ${{ inputs.observeOnly && '1' || '' }}
 
     steps:
       - name: Checkout
