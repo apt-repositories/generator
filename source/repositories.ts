@@ -9,7 +9,7 @@ import {
 
 export const repositories: Record<string, AptRepository> = {
   debian: {
-    outputDirectory: "/media/oliver/Storage/apt",
+    outputDirectory: "/tmp/apt",
     targetRepository: "apt-repositories/debian",
     mirror: "deb.debian.org",
     mirrorProtocol: "http",
@@ -28,7 +28,7 @@ export const repositories: Record<string, AptRepository> = {
     },
   },
   "debian-security": {
-    outputDirectory: "/media/oliver/Storage/apt",
+    outputDirectory: "/tmp/apt",
     targetRepository: "apt-repositories/debian",
     mirror: "security.debian.org",
     mirrorProtocol: "http",
@@ -42,7 +42,7 @@ export const repositories: Record<string, AptRepository> = {
     },
   },
   ubuntu: {
-    outputDirectory: "/media/oliver/Storage/apt",
+    outputDirectory: "/tmp/apt",
     targetRepository: "apt-repositories/ubuntu",
     mirror: "archive.ubuntu.com",
     mirrorProtocol: "http",
