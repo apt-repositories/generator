@@ -39,7 +39,8 @@ export const mergeToObservable = async (
         return;
       }
 
-      const debs = await readdir(observedPathDebs).catch(() => []);
+      const files = await readdir(observedPathDebs).catch(() => []);
+      const debs = files.filter(file => file !== ".gitkeep");
 
       if (debs.length === 0) {
         process.stderr.write(
