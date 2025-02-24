@@ -9,4 +9,4 @@ import { Package } from "apt-parser";
  * @returns The result of the `writeFile` call.
  */
 export const writePackageMetadata = (targetDirectory: string, deb: Package) =>
-  writeFile(join(targetDirectory, `${deb.package}.json`), JSON.stringify(deb));
+  writeFile(join(targetDirectory, `${deb.package}.json`), JSON.stringify(deb, undefined, "\t"));
