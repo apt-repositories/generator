@@ -3,7 +3,7 @@ import esbuild from "esbuild";
 esbuild
   .build({
     bundle: true,
-    entryPoints: ["./source/generate.ts", "./source/observe.ts", "./source/validate.ts"],
+    entryPoints: ["./source/main.ts"],
     external: ["xz-decompress"],
     format: "esm",
     inject: ["source/cjs-shim.ts"],

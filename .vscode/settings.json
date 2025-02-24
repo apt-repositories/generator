@@ -2,5 +2,6 @@
   "git.ignoreLimitWarning": true,
   "search.exclude": {
     "**/.yarn": true
-  }
+  },
+  "cSpell.words": ["trixie"]
 }

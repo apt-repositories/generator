@@ -1,3 +1,13 @@
+.PHONY: default
+default: clean build
+
+.PHONY: build
+build: output
+
+.PHONY: run
+run: clean build
+	node ./output/main.js
+
 .PHONY: clean
 clean:
 	yarn run clean
