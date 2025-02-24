@@ -71,7 +71,7 @@ jobs:
         uses: peter-evans/create-pull-request@dd2324fc52d5d43c699a5636bcf19fceaa70c284 # v7
         with:
           token: ${{ secrets.GH_ORG_TOKEN }}
-          branch: inputs.branch
+          branch: ${{ inputs.branch }}
           title: "chore: Update Metadata from Snapshot"
           labels: |
             metadata
