@@ -111,7 +111,7 @@ const main = async () => {
 
   const [, durationGenerate] = OBSERVE_ONLY
     ? [0, 0]
-    : await measureAsync(() => Promise.allSettled(Array(5).fill(tasks.entries()).map(runTask)));
+    : await measureAsync(() => Promise.all(Array(5).fill(tasks.entries()).map(runTask)));
 
   process.stderr.write(
     `Written '${formatCount(packageCount)}' package metadata files after ${formatMilliseconds(durationGenerate)}.\n`,
@@ -121,7 +121,7 @@ const main = async () => {
 
   const mergeTasks = toObservableTasks(tasks);
   const [, durationMerge] = await measureAsync(() =>
-    Promise.allSettled(Array(2).fill(mergeTasks.entries()).map(mergeToObservable)),
+    Promise.all(Array(2).fill(mergeTasks.entries()).map(mergeToObservable)),
   );
 
   process.stderr.write(
