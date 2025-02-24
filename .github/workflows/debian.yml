@@ -20,6 +20,6 @@ jobs:
     with:
       branch: debian
       repository: apt-repositories/debian
-      BASE_ID_ONLY: debian
+      baseIdOnly: debian
     secrets:
       GH_ORG_TOKEN: ${{ secrets.GH_ORG_TOKEN }}

@@ -20,6 +20,6 @@ jobs:
     with:
       branch: ubuntu
       repository: apt-repositories/ubuntu
-      BASE_ID_ONLY: ubuntu
+      baseIdOnly: ubuntu
     secrets:
       GH_ORG_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
