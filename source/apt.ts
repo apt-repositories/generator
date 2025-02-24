@@ -30,13 +30,13 @@ export const getPackagesRawXZ = async (
   config: DebianConfiguration,
 ): Promise<[string, IncomingHttpHeaders]> => {
   const debianMirrorUrl = new URL(
-    `${config.mirrorProtocol}://${config.mirror}/${config.root}/dists/${config.release}/${config.component}`,
+    `${config.mirrorProtocol}://${config.mirror}/${config.baseDir}/dists/${config.release}/${config.component}`,
   );
   const packagesUrl = new URL(
     `${debianMirrorUrl.toString()}/binary-${config.architecture}/Packages.xz`,
   );
 
-  process.stderr.write(`  ? Processing '${packagesUrl.toString()}'...\n`);
+  process.stderr.write(`  . Processing '${packagesUrl.toString()}'...\n`);
 
   const packagesResponse = await request(packagesUrl, {
     headers: {
@@ -48,7 +48,7 @@ export const getPackagesRawXZ = async (
   if (packagesResponse.statusCode === 200) {
     const responsePayload = await packagesResponse.body.arrayBuffer();
     // process.stderr.write(
-    //   `  ? Received HTTP ${packagesResponse.statusCode.toString()} response for '${packagesUrl}'. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
+    //   `  . Received HTTP ${packagesResponse.statusCode.toString()} response for '${packagesUrl}'. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
     // );
     return Promise.all([getPackagesTextFromXZ(responsePayload), packagesResponse.headers]).catch(
       error => {
@@ -66,7 +66,7 @@ export const getPackagesRawXZ = async (
     );
   } else if (packagesResponse.statusCode === 404) {
     process.stderr.write(
-      `  ? Received HTTP ${packagesResponse.statusCode.toString()} response for '${packagesUrl}'. Retrying with .gz fallback...\n`,
+      `  . Received HTTP ${packagesResponse.statusCode.toString()} response for '${packagesUrl}'. Retrying with .gz fallback...\n`,
     );
     return getPackagesRawGZ(config);
   }
@@ -80,13 +80,13 @@ export const getPackagesRawGZ = async (
   config: DebianConfiguration,
 ): Promise<[string, IncomingHttpHeaders]> => {
   const debianMirrorUrl = new URL(
-    `${config.mirrorProtocol}://${config.mirror}/${config.root}/dists/${config.release}/${config.component}`,
+    `${config.mirrorProtocol}://${config.mirror}/${config.baseDir}/dists/${config.release}/${config.component}`,
   );
   const packagesUrl = new URL(
     `${debianMirrorUrl.toString()}/binary-${config.architecture}/Packages.gz`,
   );
 
-  process.stderr.write(`  ? Processing '${packagesUrl.toString()}'...\n`);
+  process.stderr.write(`  . Processing '${packagesUrl.toString()}'...\n`);
 
   const packagesResponse = await request(packagesUrl, {
     headers: {
@@ -109,7 +109,7 @@ export const getPackagesRawGZ = async (
 
   const responsePayload = await packagesResponse.body.arrayBuffer();
   process.stderr.write(
-    `  ? Received HTTP ${packagesResponse.statusCode.toString()} response for '${packagesUrl}'. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
+    `  . Received HTTP ${packagesResponse.statusCode.toString()} response for '${packagesUrl}'. (${formatBytes(responsePayload.byteLength, { space: false })})\n`,
   );
   const packagesText = getPackagesTextFromGZ(responsePayload);
 

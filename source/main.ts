@@ -2,19 +2,27 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { argv } from "node:process";
 import { retry } from "@oliversalzburg/js-utils/async/async.js";
-import { isNil } from "@oliversalzburg/js-utils/data/nil.js";
+import { isNil, mustExist } from "@oliversalzburg/js-utils/data/nil.js";
 import { errorToString, unknownToError } from "@oliversalzburg/js-utils/errors/error-serializer.js";
 import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
 import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
 import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
 import { getPackagesRawXZ, parsePackages } from "./apt.js";
+import { mergeToObservable } from "./observable.js";
 import { repositories } from "./repositories.js";
 import { writePackageMetadata } from "./tools.js";
 import { Configuration } from "./types.js";
 
+const BASE_ID_ONLY = process.env["BASE_ID_ONLY"];
+const OBSERVE_ONLY = process.env["OBSERVE_ONLY"] !== undefined;
+
 const serializeConfiguration = () => {
   const tasks = new Array<Configuration>();
   for (const [id, repository] of Object.entries(repositories)) {
+    if (!isNil(BASE_ID_ONLY) && id !== BASE_ID_ONLY) {
+      continue;
+    }
+
     for (const release of repository.releases) {
       for (const component of repository.components) {
         if ((repository.excludedComponents?.[release] ?? []).includes(component)) {
@@ -27,13 +35,43 @@ const serializeConfiguration = () => {
           mirrorProtocol: repository.mirrorProtocol,
           outputDirectory: repository.outputDirectory,
           release,
+          rootRelease: release.includes("-") ? release.substring(0, release.indexOf("-")) : release,
+          baseId: id.includes("-") ? id.substring(0, id.indexOf("-")) : id,
           repositoryId: id,
           root: repository.root,
+          baseDir: repository.baseDir,
           targetRepository: repository.targetRepository,
         });
       }
     }
   }
+  return tasks;
+};
+
+const toObservableTasks = (completedTasks: Array<Configuration>) => {
+  const tasks = new Map<string, Array<Configuration>>();
+  for (const task of completedTasks) {
+    const key = `${task.targetRepository}/${task.baseId}/${task.rootRelease}/${task.component}`;
+    if (!tasks.has(key)) {
+      tasks.set(key, new Array<Configuration>());
+    }
+
+    mustExist(tasks.get(key)).push({
+      architecture: "amd64",
+      component: task.component,
+      mirror: task.mirror,
+      mirrorProtocol: task.mirrorProtocol,
+      outputDirectory: task.outputDirectory,
+      release: task.release,
+      repositoryId: task.repositoryId,
+      root: task.root,
+      baseDir: task.baseDir,
+      rootRelease: task.rootRelease,
+      baseId: task.baseId,
+      targetRepository: task.targetRepository,
+    });
+  }
+
   return tasks;
 };
 
@@ -70,16 +108,32 @@ const main = async () => {
     }
   };
 
-  const [, duration] = await measureAsync(() =>
-    Promise.allSettled(Array(5).fill(tasks.entries()).map(runTask)),
+  const [, durationGenerate] = OBSERVE_ONLY
+    ? [0, 0]
+    : await measureAsync(() => Promise.allSettled(Array(5).fill(tasks.entries()).map(runTask)));
+
+  process.stderr.write(
+    `Written '${formatCount(packageCount)}' package metadata files after ${formatMilliseconds(durationGenerate)}.\n`,
+  );
+
+  process.stderr.write(`Merging metadata files into observables...\n`);
+
+  const mergeTasks = toObservableTasks(tasks);
+  const [, durationMerge] = await measureAsync(() =>
+    Promise.allSettled(Array(2).fill(mergeTasks.entries()).map(mergeToObservable)),
   );
 
   process.stderr.write(
-    `Written '${formatCount(packageCount)}' package metadata files after ${formatMilliseconds(duration)}.\n`,
+    `Observables successfully generated after ${formatMilliseconds(durationMerge)}.\n`,
   );
 };
 
-main().catch((maybeError: unknown) => {
+const entrypoint = async () => {
+  const [, duration] = await measureAsync(() => main());
+  process.stderr.write(`Completed successfully after ${formatMilliseconds(duration)}.\n`);
+};
+
+entrypoint().catch((maybeError: unknown) => {
   const error = unknownToError(maybeError);
   process.stderr.write(errorToString(error) + "\n");
   process.exit(1);

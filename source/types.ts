@@ -53,7 +53,7 @@ export const UbuntuReleases = [
   "xenial-security",
   "xenial-updates",
   "xenial",
-];
+] as const;
 export type UbuntuRelease = (typeof UbuntuReleases)[number];
 
 export const UbuntuComponents = ["main", "multiverse", "restricted", "universe"] as const;
@@ -65,6 +65,7 @@ export interface AptRepository {
   mirror: string;
   mirrorProtocol: "http" | "https";
   root: string;
+  baseDir: string;
   architectures: Array<"amd64">;
   releases: ReadonlyArray<DebianRelease | DebianReleaseSecurity | UbuntuRelease>;
   components: ReadonlyArray<DebianComponent | UbuntuComponent>;
@@ -83,7 +84,10 @@ export interface Configuration {
   mirror: string;
   mirrorProtocol: "http" | "https";
   root: string;
+  baseDir: string;
+  baseId: string;
   architecture: "amd64";
+  rootRelease: string;
   release: DebianRelease | DebianReleaseSecurity | UbuntuRelease;
   component: DebianComponent | UbuntuComponent;
 }

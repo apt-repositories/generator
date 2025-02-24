@@ -18,34 +18,8 @@ jobs:
       contents: write
       pull-requests: write
     with:
+      branch: debian
       repository: apt-repositories/debian
-      DEBIAN_MIRROR: deb.debian.org
-      DEBIAN_ROOT: debian
-      DEBIAN_ARCHITECTURE: amd64
-      DEBIAN_RELEASE: ${{ matrix.DEBIAN_RELEASE }}
-      DEBIAN_COMPONENT: ${{ matrix.DEBIAN_COMPONENT }}
-      DEBIAN_OBSERVABLES: |
-        debian/${{ matrix.DEBIAN_RELEASE }}
-        debian/${{ matrix.DEBIAN_RELEASE }}-updates
-        debian-security/${{ matrix.DEBIAN_RELEASE }}-security
+      BASE_ID_ONLY: debian
     secrets:
       GH_ORG_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
-    strategy:
-      fail-fast: false
-      matrix:
-        DEBIAN_RELEASE:
-          - bookworm
-          - bullseye
-          - buster
-          - sid
-          - trixie
-        DEBIAN_COMPONENT:
-          - main
-          - contrib
-          - non-free
-          - non-free-firmware
-        exclude:
-          - DEBIAN_RELEASE: bullseye
-            DEBIAN_COMPONENT: non-free-firmware
-          - DEBIAN_RELEASE: buster
-            DEBIAN_COMPONENT: non-free-firmware

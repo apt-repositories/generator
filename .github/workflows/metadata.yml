@@ -3,29 +3,23 @@ name: Metadata
 on:
   workflow_call:
     inputs:
+      branch:
+        description: The branch to put the changes for the PR on.
+        required: true
+        type: string
       repository:
+        description: The name of the repository where we publish the metadata.
         required: true
         type: string
-      DEBIAN_MIRROR:
-        required: true
-        type: string
-      DEBIAN_ROOT:
-        required: true
-        type: string
-      DEBIAN_ARCHITECTURE:
+      baseIdOnly:
+        description: Process only this base release ID.
         required: false
         type: string
-        default: amd64
-      DEBIAN_RELEASE:
-        required: true
-        type: string
-      DEBIAN_COMPONENT:
-        required: true
-        type: string
-      DEBIAN_OBSERVABLES:
+      observeOnly:
+        default: false
+        description: Skip downloading metadata, and just produce observables from existing files.
         required: false
-        type: string
-        default: ""
+        type: boolean
     secrets:
       GH_ORG_TOKEN:
         required: true
@@ -45,16 +39,14 @@ jobs:
       contents: write
       pull-requests: write
     env:
-      DEBIAN_MIRROR: ${{ inputs.DEBIAN_MIRROR }}
-      DEBIAN_ROOT: ${{ inputs.DEBIAN_ROOT }}
-      DEBIAN_ARCHITECTURE: ${{ inputs.DEBIAN_ARCHITECTURE }}
-      DEBIAN_RELEASE: ${{ inputs.DEBIAN_RELEASE }}
-      DEBIAN_COMPONENT: ${{ inputs.DEBIAN_COMPONENT }}
+      BASE_ID_ONLY: ${{ inputs.baseIdOnly }}
+      OBSERVE_ONLY: ${{ inputs.observeOnly || null }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
+          persist-credentials: true
           repository: ${{ inputs.repository }}
           token: ${{ secrets.GH_ORG_TOKEN }}
 
@@ -66,26 +58,11 @@ jobs:
       - name: Update metadata
         id: metadata
         run: |
-          rm -rf apt/$DEBIAN_ROOT/$DEBIAN_RELEASE/$DEBIAN_COMPONENT || true
+          rm -rf apt || true
 
           set -o pipefail
           echo "log<<EOF" >> $GITHUB_OUTPUT
-          2>&1 npx --package @apt-repositories/generator@$GENERATOR_VERSION --command generate "apt/$DEBIAN_ROOT/$DEBIAN_RELEASE/$DEBIAN_COMPONENT" | tee --append $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-          set +o pipefail
-
-      - name: Make observable
-        if: inputs.DEBIAN_OBSERVABLES
-        id: observable
-        env:
-          DEBIAN_OBSERVABLES: ${{ inputs.DEBIAN_OBSERVABLES }}
-          OUTPUT_DIRECTORY: "apt/${{ env.DEBIAN_ROOT }}-observable/${{ env.DEBIAN_RELEASE }}/${{ env.DEBIAN_COMPONENT }}"
-        run: |
-          rm -rf $OUTPUT_DIRECTORY || true
-
-          set -o pipefail
-          echo "log<<EOF" >> $GITHUB_OUTPUT
-          2>&1 npx --package @apt-repositories/generator@$GENERATOR_VERSION --command observe | tee --append $GITHUB_OUTPUT
+          2>&1 npx --package @apt-repositories/generator@$GENERATOR_VERSION | tee --append $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
@@ -94,11 +71,10 @@ jobs:
         uses: peter-evans/create-pull-request@67ccf781d68cd99b580ae25a5c18a1cc84ffff1f # v7
         with:
           token: ${{ secrets.GH_ORG_TOKEN }}
-          branch: "${{ env.DEBIAN_ROOT }}/${{ env.DEBIAN_RELEASE }}/${{ env.DEBIAN_COMPONENT }}"
-          title: "chore(${{ env.DEBIAN_ROOT }}): ${{ env.DEBIAN_RELEASE }}/${{ env.DEBIAN_COMPONENT }}"
+          branch: inputs.branch
+          title: "chore: Update Metadata from Snapshot"
           labels: |
             metadata
-            ${{ env.DEBIAN_RELEASE }}
           body: |
             ## Metadata Log
             ```shell
@@ -110,12 +86,12 @@ jobs:
             ${{ steps.observable.outcome != 'skipped' && steps.observable.outputs.log || 'skipped' }}
             ```
           commit-message: |
-            chore(${{ env.DEBIAN_ROOT }}): Metadata update for ${{ env.DEBIAN_RELEASE }}/${{ env.DEBIAN_COMPONENT }}
+            chore: Update Metadata from Snapshot
 
             Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Auto-merge pull request
-        if: steps.pr.outputs.pull-request-number
+        if: false && steps.pr.outputs.pull-request-number
         run: gh pr merge --merge --auto "${{ steps.pr.outputs.pull-request-number }}"
         env:
           GH_TOKEN: ${{ secrets.GH_ORG_TOKEN }}

@@ -9,11 +9,12 @@ import {
 
 export const repositories: Record<string, AptRepository> = {
   debian: {
-    outputDirectory: "/tmp/apt",
+    outputDirectory: "/media/oliver/Storage/apt",
     targetRepository: "apt-repositories/debian",
     mirror: "deb.debian.org",
     mirrorProtocol: "http",
     root: "debian",
+    baseDir: "debian",
     architectures: ["amd64"],
     releases: DebianReleases,
     components: DebianComponents,
@@ -27,11 +28,12 @@ export const repositories: Record<string, AptRepository> = {
     },
   },
   "debian-security": {
-    outputDirectory: "/tmp/apt",
+    outputDirectory: "/media/oliver/Storage/apt",
     targetRepository: "apt-repositories/debian",
     mirror: "security.debian.org",
     mirrorProtocol: "http",
-    root: "debian-security",
+    root: "debian",
+    baseDir: "debian-security",
     architectures: ["amd64"],
     releases: DebianReleasesSecurity,
     components: DebianComponents,
@@ -40,11 +42,12 @@ export const repositories: Record<string, AptRepository> = {
     },
   },
   ubuntu: {
-    outputDirectory: "/tmp/apt",
+    outputDirectory: "/media/oliver/Storage/apt",
     targetRepository: "apt-repositories/ubuntu",
     mirror: "archive.ubuntu.com",
     mirrorProtocol: "http",
     root: "ubuntu",
+    baseDir: "ubuntu",
     architectures: ["amd64"],
     releases: UbuntuReleases,
     components: UbuntuComponents,
