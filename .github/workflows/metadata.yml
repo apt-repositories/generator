@@ -61,6 +61,7 @@ jobs:
           rm -rf apt || true
 
           set -o pipefail
+          echo "timestamp=$(date --iso-8601=s --utc)" >> "$GITHUB_OUTPUT"
           echo "log<<EOF" >> $GITHUB_OUTPUT
           2>&1 npx @apt-repositories/generator@$GENERATOR_VERSION | tee --append $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -72,7 +73,7 @@ jobs:
         with:
           token: ${{ secrets.GH_ORG_TOKEN }}
           branch: ${{ inputs.branch }}
-          title: "chore: Update Metadata from Snapshot"
+          title: "chore: Update Metadata from Snapshot ${{ steps.metadata.outputs.timestamp }}"
           labels: |
             metadata
           body: |
@@ -81,7 +82,9 @@ jobs:
             ${{ steps.metadata.outputs.log }}
             ```
           commit-message: |
-            chore: Update Metadata from Snapshot
+            chore: Update Metadata from Snapshot ${{ steps.metadata.outputs.timestamp }}
+
+            ${{ steps.metadata.outputs.log }}
 
             Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
