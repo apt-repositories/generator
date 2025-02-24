@@ -86,7 +86,7 @@ jobs:
             Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Auto-merge pull request
-        if: false && steps.pr.outputs.pull-request-number
+        if: steps.pr.outputs.pull-request-number
         run: gh pr merge --merge --auto "${{ steps.pr.outputs.pull-request-number }}"
         env:
           GH_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
