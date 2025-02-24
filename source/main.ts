@@ -104,7 +104,7 @@ const main = async () => {
       }
 
       process.stderr.write(
-        `  + Written '${formatCount(packageCountComponent)}' package metadata files for component '${task.root}/${task.release}/${task.component}' to '${outputDirectory}'.\n`,
+        `  + Written ${formatCount(packageCountComponent)} package metadata files for component '${task.root}/${task.release}/${task.component}' to '${outputDirectory}'.\n`,
       );
     }
   };
@@ -114,7 +114,7 @@ const main = async () => {
     : await measureAsync(() => Promise.all(Array(5).fill(tasks.entries()).map(runTask)));
 
   process.stderr.write(
-    `Written '${formatCount(packageCount)}' package metadata files after ${formatMilliseconds(durationGenerate)}.\n`,
+    `Written ${formatCount(packageCount)} package metadata files after ${formatMilliseconds(durationGenerate)}.\n`,
   );
 
   process.stderr.write(`Merging metadata files into observables...\n`);
