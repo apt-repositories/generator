@@ -32,21 +32,14 @@ export const mergeToObservable = async (
       const observable = `${release.root}/${release.release}`;
       const observedPathDebs = join(release.outputDirectory, observable, release.component);
 
-      if (!existsSync(observedPathDebs)) {
-        process.stderr.write(
-          `    ! ${target}: Observable '${observable}', expected at '${observedPathDebs}', was not found. Continuing...\n`,
-        );
-        return;
-      }
-
-      const files = await readdir(observedPathDebs).catch(() => []);
+      const files = await readdir(observedPathDebs);
       const debs = files.filter(file => file !== ".gitkeep");
 
       if (debs.length === 0) {
         process.stderr.write(
           `    . ${target}: '${observable}/${release.component}' contains zero packages and is skipped.\n`,
         );
-        return;
+        continue;
       }
 
       process.stderr.write(
