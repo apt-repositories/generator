@@ -21,7 +21,6 @@ export const repositories: Record<string, AptRepository> = {
     excludedComponents: {
       bullseye: ["non-free-firmware"],
       "bullseye-backports": ["non-free-firmware"],
-      "bullseye-security": ["non-free-firmware"],
       "bullseye-updates": ["non-free-firmware"],
       buster: ["non-free-firmware"],
       "buster-updates": ["non-free-firmware"],
