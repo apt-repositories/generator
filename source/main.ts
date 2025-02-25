@@ -134,13 +134,8 @@ const main = async () => {
         process.stderr.write(
           outdent`
             ${outdent}
-              !
-            
-              If it is reasonable to expect that this component will never have any entries, mark the component as empty in your configuration:
-
-              emptyComponents: { "${task.release}": ["${task.component}"] }
-
-              !`,
+              ! If it is reasonable to expect that this component will never have any entries, mark the component as empty in your configuration:
+              !   emptyComponents: { "${task.release}": ["${task.component}"] }\n`,
         );
       }
     }
