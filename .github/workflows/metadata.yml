@@ -89,10 +89,10 @@ jobs:
           git config --global user.email "oliver.salzburg@gmail.com"
           git config --global user.name "Oliver Salzburg"
 
-          echo "Creating $BRANCH branch..."
+          echo "Creating '$BRANCH' branch..."
           git branch $BRANCH main || true
 
-          echo "Checking out $BRANCH..."
+          echo "Checking out '$BRANCH'..."
           git checkout $BRANCH
 
           echo "Staging changes..."
