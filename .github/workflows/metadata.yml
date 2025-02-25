@@ -87,14 +87,12 @@ jobs:
           git config --global user.email "oliver.salzburg@gmail.com"
           git config --global user.name "Oliver Salzburg"
 
-          git branch \
-            --track main \
-            $BRANCH || true
+          git branch $BRANCH main || true
           git checkout $BRANCH
           git add --all
           git commit \
             --file /tmp/commit-message.txt
-          git push
+          git push origin debian
 
           cat >/tmp/pr-body.txt <<EOF
           ## Metadata Log
