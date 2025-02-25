@@ -89,7 +89,7 @@ jobs:
           git config --global user.email "oliver.salzburg@gmail.com"
           git config --global user.name "Oliver Salzburg"
 
-          echo "Creating $BRANCH branch..."
+          echo "Creating '$BRANCH' branch..."
           git switch --create $BRANCH || true
 
           echo "Staging changes..."
@@ -99,7 +99,7 @@ jobs:
           git commit \
             --file /tmp/commit-message.txt
 
-          echo "Pushing $BRANCH to origin..."
+          echo "Pushing '$BRANCH' to origin..."
           git push --force origin $BRANCH
 
           echo "Generating PR body..."
