@@ -132,14 +132,12 @@ const main = async () => {
 
       if (0 === packageCountComponent) {
         process.stderr.write(
-          "\n" +
-            outdent`
+          outdent`
             ${outdent}
               !
               ! If it is reasonable to expect that this component will never have any entries, mark the component as empty in your configuration:
               !   emptyComponents: { "${task.release}": ["${task.component}"] }
-              !` +
-            "\n",
+              !` + "\n",
         );
       }
     }

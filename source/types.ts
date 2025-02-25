@@ -59,7 +59,12 @@ export type UbuntuRelease = (typeof UbuntuReleases)[number];
 export const UbuntuComponents = ["main", "multiverse", "restricted", "universe"] as const;
 export type UbuntuComponent = (typeof UbuntuComponents)[number];
 
-export interface UserConfiguration {
+export interface UserConfiguration<
+  TReleases extends DebianRelease | DebianReleaseSecurity | UbuntuRelease,
+  TComponents extends DebianComponent | UbuntuComponent = TReleases extends UbuntuRelease
+    ? UbuntuComponent
+    : DebianComponent,
+> {
   outputDirectory: string;
   targetRepository: string;
   mirror: string;
@@ -67,15 +72,10 @@ export interface UserConfiguration {
   root: string;
   baseDir: string;
   architectures: Array<"amd64">;
-  releases: ReadonlyArray<DebianRelease | DebianReleaseSecurity | UbuntuRelease>;
-  components: ReadonlyArray<DebianComponent | UbuntuComponent>;
+  releases: ReadonlyArray<TReleases>;
+  components: ReadonlyArray<TComponents>;
 
-  emptyComponents?: Partial<
-    Record<
-      DebianRelease | DebianReleaseSecurity | UbuntuRelease,
-      ReadonlyArray<DebianComponent | UbuntuComponent>
-    >
-  >;
+  emptyComponents?: Partial<Record<TReleases, ReadonlyArray<TComponents>>>;
 
   /**
    * Components that don't exist for a release.
@@ -83,12 +83,7 @@ export interface UserConfiguration {
    * will be created.
    * @example non-free-firmware wasn't available before bookworm.
    */
-  excludedComponents?: Partial<
-    Record<
-      DebianRelease | DebianReleaseSecurity | UbuntuRelease,
-      ReadonlyArray<DebianComponent | UbuntuComponent>
-    >
-  >;
+  excludedComponents?: Partial<Record<TReleases, ReadonlyArray<TComponents>>>;
 }
 
 export interface MirrorConfiguration {
