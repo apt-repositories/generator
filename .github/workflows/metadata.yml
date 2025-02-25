@@ -90,6 +90,7 @@ jobs:
           git config --global user.name "Oliver Salzburg"
 
           echo "Creating '$BRANCH' branch..."
+          git branch --delete --force $BRANCH || true
           git branch $BRANCH main || true
 
           echo "Checking out '$BRANCH'..."
