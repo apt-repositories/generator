@@ -70,6 +70,7 @@ jobs:
       - name: Create PR
         env:
           BRANCH: ${{ inputs.branch }}
+          GH_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
           LOG: ${{ steps.metadata.outputs.log }}
           REPOSITORY: ${{ inputs.repository }}
           TIMESTAMP: ${{ steps.metadata.outputs.timestamp }}
@@ -92,9 +93,9 @@ jobs:
 
           cat >/tmp/pr-body.txt <<EOF
           ## Metadata Log
-          ```shell
+          \`\`\`shell
           $LOG
-          ```
+          \`\`\`
           EOF
 
           PR_URL=$(gh pr create \
