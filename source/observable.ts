@@ -32,7 +32,7 @@ export const mergeToObservable = async (
 
       if (debs.length === 0) {
         process.stderr.write(
-          `    . ${target}: '${observable}/${release.component}' contains zero packages and is skipped.\n`,
+          `    . ${target}: '${observable}/${release.component}' contains 0 packages and is skipped.\n`,
         );
         continue;
       }
