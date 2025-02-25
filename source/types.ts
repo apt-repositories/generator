@@ -75,6 +75,11 @@ export interface UserConfiguration<
   releases: ReadonlyArray<TReleases>;
   components: ReadonlyArray<TComponents>;
 
+  /**
+   * Components that are known to contain 0 packages.
+   * These components will not be requested from the mirror, but are still
+   * created in the filesystem.
+   */
   emptyComponents?: Partial<Record<TReleases, ReadonlyArray<TComponents>>>;
 
   /**
@@ -84,19 +89,54 @@ export interface UserConfiguration<
    * @example non-free-firmware wasn't available before bookworm.
    */
   excludedComponents?: Partial<Record<TReleases, ReadonlyArray<TComponents>>>;
+
+  gzipComponents?: Partial<Record<TReleases, ReadonlyArray<TComponents>>>;
 }
 
 export interface MirrorConfiguration {
-  repositoryId: string;
-  outputDirectory: string;
-  targetRepository: string;
-  mirror: string;
-  mirrorProtocol: "http" | "https";
-  root: string;
-  baseDir: string;
+  /**
+   * The architecture we're referring to.
+   * @example amd64
+   */
   architecture: "amd64";
-  rootRelease: string;
-  release: DebianRelease | DebianReleaseSecurity | UbuntuRelease;
+  /**
+   * The root directory on the mirror.
+   * @example debian
+   */
+  baseDir: string;
+  /**
+   * The component we're referring to.
+   * @example main
+   */
   component: DebianComponent | UbuntuComponent;
   isEmpty: boolean;
+  isGzip: boolean;
+  /**
+   * The hostname of the mirror where we can fetch packages from.
+   * @example deb.debian.org
+   */
+  mirror: string;
+  /**
+   * The protocol through which we can reach the mirror.
+   * @example https
+   */
+  mirrorProtocol: "http" | "https";
+  outputDirectory: string;
+  /**
+   * The release we're referring to.
+   * @example bookworm-updates
+   */
+  release: DebianRelease | DebianReleaseSecurity | UbuntuRelease;
+  repositoryId: string;
+  /**
+   * The name of the main distribution. If we target 'debian-security', the baseId is 'debian'.
+   * @example debian
+   */
+  root: string;
+  /**
+   * The release we're referring to.  This is usually a codename of Debian release.
+   * @example bookworm
+   */
+  rootRelease: string;
+  targetRepository: string;
 }

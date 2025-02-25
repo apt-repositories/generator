@@ -8,7 +8,7 @@ import { outdent } from "outdent";
 import { request } from "undici";
 import { IncomingHttpHeaders } from "undici/types/header.js";
 import xz from "xz-decompress";
-import { DebianConfiguration } from "./debian.js";
+import { MirrorConfiguration } from "./types.js";
 
 const getPackagesTextFromGZ = (packagesRaw: ArrayBuffer) => {
   const packagesDeflated = gunzipSync(packagesRaw);
@@ -27,8 +27,12 @@ const getPackagesTextFromXZ = async (packagesRaw: ArrayBuffer) => {
 };
 
 export const getPackagesRawXZ = async (
-  config: DebianConfiguration,
+  config: MirrorConfiguration,
 ): Promise<[string, IncomingHttpHeaders]> => {
+  if (config.isGzip) {
+    return getPackagesRawGZ(config);
+  }
+
   const debianMirrorUrl = new URL(
     `${config.mirrorProtocol}://${config.mirror}/${config.baseDir}/dists/${config.release}/${config.component}`,
   );
@@ -68,6 +72,14 @@ export const getPackagesRawXZ = async (
     process.stderr.write(
       `  . Received HTTP ${packagesResponse.statusCode.toString()} response for '${packagesUrl}'. Retrying with .gz fallback...\n`,
     );
+    process.stderr.write(
+      outdent`
+        ${outdent}
+          !
+          ! If it is reasonable to expect that this component will never be provided as a '.xz', mark the component as gzip in your configuration:
+          !   gzipComponents: { "${config.release}": ["${config.component}"] }
+          !` + "\n",
+    );
     return getPackagesRawGZ(config);
   }
 
@@ -77,7 +89,7 @@ export const getPackagesRawXZ = async (
 };
 
 export const getPackagesRawGZ = async (
-  config: DebianConfiguration,
+  config: MirrorConfiguration,
 ): Promise<[string, IncomingHttpHeaders]> => {
   const debianMirrorUrl = new URL(
     `${config.mirrorProtocol}://${config.mirror}/${config.baseDir}/dists/${config.release}/${config.component}`,
@@ -96,9 +108,15 @@ export const getPackagesRawGZ = async (
   });
 
   if (packagesResponse.statusCode === 404) {
-    throw new Error(
-      `! Received HTTP 404 response for '${packagesUrl}'. This component might have to be added to 'excludedComponents'. Failed.`,
+    process.stderr.write(
+      outdent`
+        ${outdent}
+          !
+          ! If it is reasonable to expect that this component will never be provided, mark the component as excluded in your configuration:
+          !   excludedComponents: { "${config.release}": ["${config.component}"] }
+          !` + "\n",
     );
+    throw new Error(`! Received HTTP 404 response for '${packagesUrl}'. Failed.`);
   }
 
   if (packagesResponse.statusCode !== 200) {

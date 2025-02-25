@@ -34,12 +34,14 @@ const serializeConfiguration = () => {
         }
 
         const isEmpty = (repository.emptyComponents?.[release] ?? []).includes(component);
+        const isGzip = (repository.gzipComponents?.[release] ?? []).includes(component);
 
         tasks.push({
           architecture: "amd64",
           baseDir: repository.baseDir,
           component,
           isEmpty,
+          isGzip,
           mirror: repository.mirror,
           mirrorProtocol: repository.mirrorProtocol,
           outputDirectory: repository.outputDirectory,
@@ -68,6 +70,7 @@ const toObservableTasks = (completedTasks: Array<MirrorConfiguration>) => {
       baseDir: task.baseDir,
       component: task.component,
       isEmpty: task.isEmpty,
+      isGzip: task.isGzip,
       mirror: task.mirror,
       mirrorProtocol: task.mirrorProtocol,
       outputDirectory: task.outputDirectory,
