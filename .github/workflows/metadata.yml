@@ -100,9 +100,7 @@ jobs:
           EOF
 
           PR_URL=$(gh pr create \
-            --base main \
             --body-file /tmp/pr-body.txt \
-            --head $BRANCH \
             --repo $REPOSITORY \
             --title "chore: Update Metadata from Snapshot $TIMESTAMP")
 
