@@ -26,7 +26,7 @@ on:
 
 env:
   # renovate: datasource=npm depName=@apt-repositories/generator versioning=semver
-  GENERATOR_VERSION: "2.0.16"
+  GENERATOR_VERSION: "2.0.17"
   # renovate: datasource=node-version depName=node versioning=node
   NODE_VERSION: "22.14.0"
   NODE_OPTIONS: --enable-source-maps
@@ -111,7 +111,7 @@ jobs:
           EOF
 
           echo "Trying to close existing PR..."
-          gh pr close $BRANCH
+          gh pr close $BRANCH || true
 
           echo "Creating PR..."
           PR_URL=$(gh pr create \
