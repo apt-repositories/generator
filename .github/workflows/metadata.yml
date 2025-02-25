@@ -87,11 +87,13 @@ jobs:
           git config --global user.email "oliver.salzburg@gmail.com"
           git config --global user.name "Oliver Salzburg"
 
-          cd /tmp
           git clone \
             --depth 1 \
             --quiet \
-            $REPOSITORY_URL repository && cd repository
+            $REPOSITORY_URL /tmp/repository
+
+          mv apt /tmp/repository/
+          cd /tmp/repository
 
           git branch $BRANCH
           git add --all
