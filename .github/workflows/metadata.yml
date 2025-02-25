@@ -91,6 +91,7 @@ jobs:
           git add --all
           git commit \
             --file /tmp/commit-message.txt
+          git push
 
           cat >/tmp/pr-body.txt <<EOF
           ## Metadata Log
