@@ -67,29 +67,42 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
-      - name: Create pull request
-        id: pr
-        uses: peter-evans/create-pull-request@dd2324fc52d5d43c699a5636bcf19fceaa70c284 # v7
-        with:
-          token: ${{ secrets.GH_ORG_TOKEN }}
-          branch: ${{ inputs.branch }}
-          title: "chore: Update Metadata from Snapshot ${{ steps.metadata.outputs.timestamp }}"
-          labels: |
-            metadata
-          body: |
-            ## Metadata Log
-            ```shell
-            ${{ steps.metadata.outputs.log }}
-            ```
-          commit-message: |
-            chore: Update Metadata from Snapshot ${{ steps.metadata.outputs.timestamp }}
-
-            ${{ steps.metadata.outputs.log }}
-
-            Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-      - name: Auto-merge pull request
-        if: steps.pr.outputs.pull-request-number
-        run: gh pr merge --merge --auto "${{ steps.pr.outputs.pull-request-number }}"
+      - name: Create PR
         env:
-          GH_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
+          BRANCH: ${{ inputs.branch }}
+          LOG: ${{ steps.metadata.outputs.log }}
+          REPOSITORY: ${{ inputs.repository }}
+          TIMESTAMP: ${{ steps.metadata.outputs.timestamp }}
+        run: |
+          cat >/tmp/commit-message.txt <<EOF
+          chore: Update Metadata from Snapshot $TIMESTAMP
+
+          $LOG
+
+          Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          EOF
+
+          git config --global user.email "oliver.salzburg@gmail.com"
+          git config --global user.name "Oliver Salzburg"
+
+          git branch $BRANCH
+          git add --all
+          git commit \
+            --file /tmp/commit-message.txt
+
+          cat >/tmp/pr-body.txt <<EOF
+          ## Metadata Log
+          ```shell
+          $LOG
+          ```
+          EOF
+
+          PR_URL=$(gh pr create \
+            --base main \
+            --body-file /tmp/pr-body.txt \
+            --head $BRANCH \
+            --repo $REPOSITORY \
+            --title "chore: Update Metadata from Snapshot $TIMESTAMP")
+
+          echo Created $PR_URL
+          gh pr merge --merge --auto $PR_URL
