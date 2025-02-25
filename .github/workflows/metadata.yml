@@ -76,11 +76,14 @@ jobs:
           REPOSITORY: ${{ inputs.repository }}
           TIMESTAMP: ${{ steps.metadata.outputs.timestamp }}
         run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "The last execution did not provide any new metadata. The target repository is in sync."
+            exit 0
+          fi
+
           echo "Generating commit message..."
           cat >/tmp/commit-message.txt <<EOF
           chore: Update Metadata from Snapshot $TIMESTAMP
-
-          $LOG
 
           Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           EOF
@@ -89,8 +92,10 @@ jobs:
           git config --global user.email "oliver.salzburg@gmail.com"
           git config --global user.name "Oliver Salzburg"
 
-          echo "Creating '$BRANCH' branch..."
+          echo "Removing previous '$BRANCH' branch..."
           git branch --delete --force $BRANCH || true
+
+          echo "Creating '$BRANCH' branch..."
           git branch $BRANCH main || true
 
           echo "Checking out '$BRANCH'..."
