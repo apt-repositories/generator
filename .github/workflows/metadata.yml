@@ -68,7 +68,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
           set +o pipefail
 
-      - name: Create PR
+      - name: Create pull request
         env:
           BRANCH: ${{ inputs.branch }}
           GH_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
@@ -105,7 +105,7 @@ jobs:
           echo "Pushing '$BRANCH' to origin..."
           git push --force origin $BRANCH
 
-          echo "Generating PR body..."
+          echo "Generating pull request body..."
           cat >/tmp/pr-body.txt <<EOF
           ## Metadata Log
           \`\`\`shell
@@ -113,17 +113,17 @@ jobs:
           \`\`\`
           EOF
 
-          echo "Trying to close existing PR..."
+          echo "Trying to close existing pull request..."
           gh pr close $BRANCH || true
 
-          echo "Creating PR..."
+          echo "Creating pull request..."
           PR_URL=$(gh pr create \
             --body-file /tmp/pr-body.txt \
             --repo $REPOSITORY \
             --title "chore: Update Metadata from Snapshot $TIMESTAMP")
           echo "Created $PR_URL"
 
-          echo "Setting PR to auto-merge..."
+          echo "Setting pull request to auto-merge..."
           gh pr merge --auto $PR_URL
 
           echo "Done."
