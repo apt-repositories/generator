@@ -135,8 +135,10 @@ const main = async () => {
           "\n" +
             outdent`
             ${outdent}
+              !
               ! If it is reasonable to expect that this component will never have any entries, mark the component as empty in your configuration:
-              !   emptyComponents: { "${task.release}": ["${task.component}"] }` +
+              !   emptyComponents: { "${task.release}": ["${task.component}"] }
+              !` +
             "\n",
         );
       }
