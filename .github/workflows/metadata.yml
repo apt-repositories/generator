@@ -76,6 +76,7 @@ jobs:
           REPOSITORY: ${{ inputs.repository }}
           TIMESTAMP: ${{ steps.metadata.outputs.timestamp }}
         run: |
+          echo "Generating commit message..."
           cat >/tmp/commit-message.txt <<EOF
           chore: Update Metadata from Snapshot $TIMESTAMP
 
@@ -84,16 +85,27 @@ jobs:
           Generated at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           EOF
 
+          echo "Setting git user..."
           git config --global user.email "oliver.salzburg@gmail.com"
           git config --global user.name "Oliver Salzburg"
 
+          echo "Creating $BRANCH branch..."
           git branch $BRANCH main || true
+
+          echo "Checking out $BRANCH..."
           git checkout $BRANCH
+
+          echo "Staging changes..."
           git add --all
+
+          echo "Committing changes..."
           git commit \
             --file /tmp/commit-message.txt
-          git push origin debian
 
+          echo "Pushing $BRANCH to origin..."
+          git push origin $BRANCH
+
+          echo "Generating PR body..."
           cat >/tmp/pr-body.txt <<EOF
           ## Metadata Log
           \`\`\`shell
@@ -101,10 +113,14 @@ jobs:
           \`\`\`
           EOF
 
+          echo "Creating PR..."
           PR_URL=$(gh pr create \
             --body-file /tmp/pr-body.txt \
             --repo $REPOSITORY \
             --title "chore: Update Metadata from Snapshot $TIMESTAMP")
+          echo "Created $PR_URL"
 
-          echo Created $PR_URL
-          gh pr merge --merge --auto $PR_URL
+          echo "Setting PR to auto-merge..."
+          gh pr merge --auto $PR_URL
+
+          echo "Done."
