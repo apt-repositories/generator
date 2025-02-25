@@ -1,10 +1,10 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
-import { Configuration } from "./types.js";
+import { MirrorConfiguration } from "./types.js";
 
 export const mergeToObservable = async (
-  taskIterator: ArrayIterator<[string, Array<Configuration>]>,
+  taskIterator: ArrayIterator<[string, Array<MirrorConfiguration>]>,
 ) => {
   for (const [_index, task] of taskIterator) {
     let outputDirectory: string | undefined;

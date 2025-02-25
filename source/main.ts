@@ -8,11 +8,12 @@ import { errorToString, unknownToError } from "@oliversalzburg/js-utils/errors/e
 import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
 import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
 import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
+import { outdent } from "outdent";
 import { getPackagesRawXZ, parsePackages } from "./apt.js";
 import { mergeToObservable } from "./observable.js";
 import { repositories } from "./repositories.js";
 import { writePackageMetadata } from "./tools.js";
-import { Configuration } from "./types.js";
+import { MirrorConfiguration } from "./types.js";
 import { validateJsonRecursive } from "./validate.js";
 
 const BASE_ID_ONLY = process.env["BASE_ID_ONLY"];
@@ -20,7 +21,7 @@ const OBSERVE_ONLY = (process.env["OBSERVE_ONLY"] ?? "") !== "";
 const VALIDATE_ONLY = (process.env["VALIDATE_ONLY"] ?? "") !== "";
 
 const serializeConfiguration = () => {
-  const tasks = new Array<Configuration>();
+  const tasks = new Array<MirrorConfiguration>();
   for (const [id, repository] of Object.entries(repositories)) {
     if (!isNil(BASE_ID_ONLY) && repository.root !== BASE_ID_ONLY) {
       continue;
@@ -31,17 +32,21 @@ const serializeConfiguration = () => {
         if ((repository.excludedComponents?.[release] ?? []).includes(component)) {
           continue;
         }
+
+        const isEmpty = (repository.emptyComponents?.[release] ?? []).includes(component);
+
         tasks.push({
           architecture: "amd64",
+          baseDir: repository.baseDir,
           component,
+          isEmpty,
           mirror: repository.mirror,
           mirrorProtocol: repository.mirrorProtocol,
           outputDirectory: repository.outputDirectory,
           release,
-          rootRelease: release.includes("-") ? release.substring(0, release.indexOf("-")) : release,
           repositoryId: id,
           root: repository.root,
-          baseDir: repository.baseDir,
+          rootRelease: release.includes("-") ? release.substring(0, release.indexOf("-")) : release,
           targetRepository: repository.targetRepository,
         });
       }
@@ -50,24 +55,25 @@ const serializeConfiguration = () => {
   return tasks;
 };
 
-const toObservableTasks = (completedTasks: Array<Configuration>) => {
-  const tasks = new Map<string, Array<Configuration>>();
+const toObservableTasks = (completedTasks: Array<MirrorConfiguration>) => {
+  const tasks = new Map<string, Array<MirrorConfiguration>>();
   for (const task of completedTasks) {
     const key = `${task.targetRepository}/${task.root}/${task.rootRelease}/${task.component}`;
     if (!tasks.has(key)) {
-      tasks.set(key, new Array<Configuration>());
+      tasks.set(key, new Array<MirrorConfiguration>());
     }
 
     mustExist(tasks.get(key)).push({
       architecture: "amd64",
+      baseDir: task.baseDir,
       component: task.component,
+      isEmpty: task.isEmpty,
       mirror: task.mirror,
       mirrorProtocol: task.mirrorProtocol,
       outputDirectory: task.outputDirectory,
       release: task.release,
       repositoryId: task.repositoryId,
       root: task.root,
-      baseDir: task.baseDir,
       rootRelease: task.rootRelease,
       targetRepository: task.targetRepository,
     });
@@ -95,9 +101,11 @@ const main = async () => {
 
   process.stderr.write(`Generating metadata...\n`);
   let packageCount = 0;
-  const runTask = async (taskIterator: ArrayIterator<[number, Configuration]>) => {
+  const runTask = async (taskIterator: ArrayIterator<[number, MirrorConfiguration]>) => {
     for (const [_index, task] of taskIterator) {
-      const [packagesText, headers] = await retry(() => getPackagesRawXZ(task), 10, 3);
+      const [packagesText, headers] = task.isEmpty
+        ? ["", {}]
+        : await retry(() => getPackagesRawXZ(task), 10, 3);
 
       const outputDirectory = join(task.outputDirectory, task.root, task.release, task.component);
 
@@ -106,19 +114,35 @@ const main = async () => {
       await writeFile(join(outputDirectory, ".gitkeep"), "");
 
       let packageCountComponent = 0;
-      for await (const repositoryPackage of parsePackages(packagesText, headers)) {
-        if (repositoryPackage === null) {
-          break;
-        }
+      if (!task.isEmpty) {
+        for await (const repositoryPackage of parsePackages(packagesText, headers)) {
+          if (repositoryPackage === null) {
+            break;
+          }
 
-        await writePackageMetadata(outputDirectory, repositoryPackage);
-        ++packageCount;
-        ++packageCountComponent;
+          await writePackageMetadata(outputDirectory, repositoryPackage);
+          ++packageCount;
+          ++packageCountComponent;
+        }
       }
 
       process.stderr.write(
         `  + Written ${formatCount(packageCountComponent)} package metadata files for component '${task.root}/${task.release}/${task.component}' to '${outputDirectory}'.\n`,
       );
+
+      if (0 === packageCountComponent) {
+        process.stderr.write(
+          outdent`
+
+          If it is reasonable to expect that this component will never have any entries, mark the component as empty in your configuration:
+
+          emptyComponents: {
+            "${task.release}": ["${task.component}"],
+          },
+
+          `,
+        );
+      }
     }
   };
 

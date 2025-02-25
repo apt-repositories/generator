@@ -59,7 +59,7 @@ export type UbuntuRelease = (typeof UbuntuReleases)[number];
 export const UbuntuComponents = ["main", "multiverse", "restricted", "universe"] as const;
 export type UbuntuComponent = (typeof UbuntuComponents)[number];
 
-export interface AptRepository {
+export interface UserConfiguration {
   outputDirectory: string;
   targetRepository: string;
   mirror: string;
@@ -69,6 +69,20 @@ export interface AptRepository {
   architectures: Array<"amd64">;
   releases: ReadonlyArray<DebianRelease | DebianReleaseSecurity | UbuntuRelease>;
   components: ReadonlyArray<DebianComponent | UbuntuComponent>;
+
+  emptyComponents?: Partial<
+    Record<
+      DebianRelease | DebianReleaseSecurity | UbuntuRelease,
+      ReadonlyArray<DebianComponent | UbuntuComponent>
+    >
+  >;
+
+  /**
+   * Components that don't exist for a release.
+   * These components are entirely ignored and no filesystem entries for them
+   * will be created.
+   * @example non-free-firmware wasn't available before bookworm.
+   */
   excludedComponents?: Partial<
     Record<
       DebianRelease | DebianReleaseSecurity | UbuntuRelease,
@@ -77,7 +91,7 @@ export interface AptRepository {
   >;
 }
 
-export interface Configuration {
+export interface MirrorConfiguration {
   repositoryId: string;
   outputDirectory: string;
   targetRepository: string;
@@ -89,4 +103,5 @@ export interface Configuration {
   rootRelease: string;
   release: DebianRelease | DebianReleaseSecurity | UbuntuRelease;
   component: DebianComponent | UbuntuComponent;
+  isEmpty: boolean;
 }

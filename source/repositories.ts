@@ -1,13 +1,13 @@
 import {
-  AptRepository,
   DebianComponents,
   DebianReleases,
   DebianReleasesSecurity,
   UbuntuComponents,
   UbuntuReleases,
+  UserConfiguration,
 } from "./types.js";
 
-export const repositories: Record<string, AptRepository> = {
+export const repositories: Record<string, UserConfiguration> = {
   debian: {
     outputDirectory: "apt",
     targetRepository: "apt-repositories/debian",
@@ -18,6 +18,9 @@ export const repositories: Record<string, AptRepository> = {
     architectures: ["amd64"],
     releases: DebianReleases,
     components: DebianComponents,
+    emptyComponents: {
+      "trixie-backports": ["main"],
+    },
     excludedComponents: {
       bullseye: ["non-free-firmware"],
       "bullseye-backports": ["non-free-firmware"],
