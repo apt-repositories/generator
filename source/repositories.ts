@@ -20,6 +20,7 @@ export const repositories: Record<string, UserConfiguration> = {
     components: DebianComponents,
     emptyComponents: {
       "trixie-backports": ["main"],
+      "bionic-security": ["non-free"],
     },
     excludedComponents: {
       bullseye: ["non-free-firmware"],
