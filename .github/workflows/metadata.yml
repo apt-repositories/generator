@@ -26,7 +26,7 @@ on:
 
 env:
   # renovate: datasource=npm depName=@apt-repositories/generator versioning=semver
-  GENERATOR_VERSION: "2.0.14"
+  GENERATOR_VERSION: "2.0.15"
   # renovate: datasource=node-version depName=node versioning=node
   NODE_VERSION: "22.14.0"
   NODE_OPTIONS: --enable-source-maps
@@ -103,7 +103,7 @@ jobs:
             --file /tmp/commit-message.txt
 
           echo "Pushing $BRANCH to origin..."
-          git push origin $BRANCH
+          git push --force origin $BRANCH
 
           echo "Generating PR body..."
           cat >/tmp/pr-body.txt <<EOF
