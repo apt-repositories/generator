@@ -86,6 +86,8 @@ jobs:
           git config --global user.email "oliver.salzburg@gmail.com"
           git config --global user.name "Oliver Salzburg"
 
+          cd /tmp
+          git clone --depth=1 $REPOSITORY repository && cd repository
           git branch $BRANCH
           git add --all
           git commit \
