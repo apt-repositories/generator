@@ -73,7 +73,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_ORG_TOKEN }}
           LOG: ${{ steps.metadata.outputs.log }}
           REPOSITORY: ${{ inputs.repository }}
-          REPOSITORY_URL: ${{ github.server_url }}/${{ inputs.repository }}.git
           TIMESTAMP: ${{ steps.metadata.outputs.timestamp }}
         run: |
           cat >/tmp/commit-message.txt <<EOF
@@ -86,14 +85,6 @@ jobs:
 
           git config --global user.email "oliver.salzburg@gmail.com"
           git config --global user.name "Oliver Salzburg"
-
-          git clone \
-            --depth 1 \
-            --quiet \
-            $REPOSITORY_URL /tmp/repository
-
-          mv apt /tmp/repository/
-          cd /tmp/repository
 
           git branch $BRANCH
           git add --all
