@@ -86,7 +86,8 @@ jobs:
           git config --global user.email "oliver.salzburg@gmail.com"
           git config --global user.name "Oliver Salzburg"
 
-          git branch $BRANCH
+          git branch $BRANCH || true
+          git checkout $BRANCH
           git add --all
           git commit \
             --file /tmp/commit-message.txt
