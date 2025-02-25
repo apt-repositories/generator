@@ -48,6 +48,7 @@ jobs:
         with:
           persist-credentials: true
           repository: ${{ inputs.repository }}
+          show-progress: false
           token: ${{ secrets.GH_ORG_TOKEN }}
 
       - name: Select NodeJS version
