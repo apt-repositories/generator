@@ -88,7 +88,11 @@ jobs:
           git config --global user.name "Oliver Salzburg"
 
           cd /tmp
-          git clone --depth=1 $REPOSITORY_URL repository && cd repository
+          git clone \
+            --depth 1 \
+            --quiet \
+            $REPOSITORY_URL repository && cd repository
+
           git branch $BRANCH
           git add --all
           git commit \
