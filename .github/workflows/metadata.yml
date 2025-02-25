@@ -90,10 +90,7 @@ jobs:
           git config --global user.name "Oliver Salzburg"
 
           echo "Creating $BRANCH branch..."
-          git branch $BRANCH main || true
-
-          echo "Checking out $BRANCH..."
-          git checkout $BRANCH
+          git switch --create $BRANCH || true
 
           echo "Staging changes..."
           git add --all
@@ -112,6 +109,9 @@ jobs:
           $LOG
           \`\`\`
           EOF
+
+          echo "Trying to close existing PR..."
+          gh pr close $BRANCH
 
           echo "Creating PR..."
           PR_URL=$(gh pr create \
