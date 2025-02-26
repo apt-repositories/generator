@@ -20,16 +20,8 @@
     "output/main.js.map"
   ],
   "scripts": {
-    "build": "node build.js",
-    "clean": "rm -rf ./output",
-    "lint": "yarn run lint:all",
-    "lint:all": "yarn run lint:biome && yarn run lint:tsc",
-    "lint:biome": "biome check .",
-    "lint:tsc": "tsc --noEmit",
-    "nextversion": "./.scripts/manifest-version.cjs",
-    "prepack": "yarn run build",
-    "test": "echo this project has no tests.",
-    "preversion": "yarn run lint && yarn run build && yarn run test",
+    "prepack": "make",
+    "preversion": "make lint test",
     "postversion": "git push"
   },
   "dependencies": {
