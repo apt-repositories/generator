@@ -22,6 +22,7 @@ reset: clean
 output:
 	yarn run build
 
+.PHONY: observe
 observe: /tmp/debian output
 	node --enable-source-maps output/observe.js \
 		--component=main \
