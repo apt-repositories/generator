@@ -28,6 +28,10 @@ jobs:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     uses: oliversalzburg/workflows/.github/workflows/publish-npm-package.yml@main
     with:
+      has-github-pages: false
       has-mkdocs: false
       is-canary: false
+      publish-script: |
+        make
+        npm version $RELEASE_VERSION
       wants-github-release: true
