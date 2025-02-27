@@ -31,7 +31,4 @@ jobs:
       has-github-pages: false
       has-mkdocs: false
       is-canary: false
-      publish-script: |
-        make
-        npm version $RELEASE_VERSION
       wants-github-release: true
