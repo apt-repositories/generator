@@ -15,10 +15,7 @@
   "bin": {
     "generate": "output/main.js"
   },
-  "files": [
-    "output/main.js",
-    "output/main.js.map"
-  ],
+  "files": ["output/main.js", "output/main.js.map"],
   "scripts": {
     "prepack": "make",
     "preversion": "make lint test",
