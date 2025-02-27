@@ -59,6 +59,13 @@ export const RepositoryUbuntu: UserConfiguration<UbuntuRelease> = {
   architectures: ["amd64"],
   releases: UbuntuReleases,
   components: UbuntuComponents,
+  emptyComponents: {
+    "bionic-backports": ["multiverse", "restricted"],
+    "focal-backports": ["multiverse", "restricted"],
+    "jammy-backports": ["multiverse", "restricted"],
+    "noble-backports": ["main", "multiverse", "restricted"],
+    "oracular-backports": ["main", "multiverse", "restricted"],
+  },
 };
 
 export const repositories: Record<
