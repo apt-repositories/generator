@@ -5,8 +5,7 @@
   "license": "MIT",
   "author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
   "repository": {
-    "type": "git",
-    "url": "https://github.com/apt-repositories/generator.git"
+    "url": "git+https://github.com/apt-repositories/generator.git"
   },
   "bugs": {
     "url": "https://github.com/apt-repositories/generator/issues"
