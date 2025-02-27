@@ -14,7 +14,10 @@
   "bin": {
     "generate": "output/main.js"
   },
-  "files": ["output/main.js", "output/main.js.map"],
+  "files": [
+    "output/main.js",
+    "output/main.js.map"
+  ],
   "scripts": {
     "prepack": "make",
     "preversion": "make lint test",
@@ -33,7 +36,6 @@
     "@types/mocha": "10.0.10",
     "@types/node": "22.13.5",
     "esbuild": "0.25.0",
-    "lint-staged": "15.4.3",
     "typescript": "5.7.3"
   },
   "packageManager": "yarn@4.6.0"

@@ -1,17 +1,21 @@
-.PHONY: default build clean docs pretty lint test run
+.PHONY: default build clean docs git-hook pretty lint test run
 
 default: clean build
 
 build: output
 
 clean:
-	rm -rf ./output
+	rm --force --recursive node_modules output
 
 docs:
 	@echo "This project has no documentation."
 
+git-hook:
+	echo "make pretty" > .git/hooks/pre-commit
+
 pretty:
 	yarn biome check --write --no-errors-on-unmatched
+	npm pkg fix
 
 lint:
 	yarn biome check .
@@ -20,13 +24,12 @@ lint:
 test:
 	@echo "This project has no tests."
 
-run: clean build
+run: build
 	node ./output/main.js
 
 
 node_modules:
 	yarn install
-	git restore package.json
 
 output: node_modules
 	node build.js
