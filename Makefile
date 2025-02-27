@@ -26,6 +26,7 @@ run: clean build
 
 node_modules:
 	yarn install
+	git restore package.json
 
 output: node_modules
 	node build.js
