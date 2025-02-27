@@ -26,7 +26,7 @@ on:
 
 env:
   # renovate: datasource=npm depName=@apt-repositories/generator versioning=semver
-  GENERATOR_VERSION: "2.0.20"
+  GENERATOR_VERSION: "2.1.1"
   # renovate: datasource=node-version depName=node versioning=node
   NODE_VERSION: "22.14.0"
   NODE_OPTIONS: --enable-source-maps
