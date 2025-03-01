@@ -13,11 +13,11 @@ docs:
 git-hook:
 	echo "make pretty" > .git/hooks/pre-commit
 
-pretty:
+pretty: node_modules
 	yarn biome check --write --no-errors-on-unmatched
 	npm pkg fix
 
-lint:
+lint: node_modules
 	yarn biome check .
 	yarn tsc --noEmit
 
