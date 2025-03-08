@@ -4,16 +4,16 @@ on:
   push:
     tags:
       - "v*"
-  workflow_dispatch:
 
 concurrency: release
 
 jobs:
   qa:
     name: 🔹 QA
+    permissions:
+      contents: read
+      packages: read
     uses: oliversalzburg/workflows/.github/workflows/qa-npm-package.yml@main
-    with:
-      has-mkdocs: false
 
   release:
     name: 🔹 Publish
@@ -28,7 +28,11 @@ jobs:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     uses: oliversalzburg/workflows/.github/workflows/publish-npm-package.yml@main
     with:
-      has-github-pages: false
+      draft-only: true
       has-mkdocs: false
+      has-github-pages: false
       is-canary: false
-      wants-github-release: true
+      is-nightly: false
+      publish-documentation: false
+      publish-github-release: true
+      release-tag: latest
