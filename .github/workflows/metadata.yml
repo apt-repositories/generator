@@ -43,6 +43,12 @@ jobs:
       OBSERVE_ONLY: ${{ inputs.observeOnly && '1' || '' }}
 
     steps:
+      - name: Collect workflow performance data
+        uses: catchpoint/workflow-telemetry-action@v2
+        with:
+          comment_on_pr: false
+          theme: dark
+
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
