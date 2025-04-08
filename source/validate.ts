@@ -2,11 +2,6 @@
 
 import { readFile, readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
-import { argv } from "node:process";
-import { formatBytes } from "@oliversalzburg/js-utils/format/bytes.js";
-import { formatCount } from "@oliversalzburg/js-utils/format/count.js";
-import { formatMilliseconds } from "@oliversalzburg/js-utils/format/milliseconds.js";
-import { measureAsync } from "@oliversalzburg/js-utils/measurement/performance.js";
 
 export const validateJsonRecursive = async (root: string): Promise<[boolean, number, number]> => {
   const files = await readdir(root);
