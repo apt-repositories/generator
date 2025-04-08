@@ -127,21 +127,21 @@ const main = async () => {
           ++packageCount;
           ++packageCountComponent;
         }
-      }
 
-      process.stderr.write(
-        `  + Written ${formatCount(packageCountComponent)} package metadata files for component '${task.root}/${task.release}/${task.component}' to '${outputDirectory}'.\n`,
-      );
-
-      if (0 === packageCountComponent) {
         process.stderr.write(
-          outdent`
+          `  + Written ${formatCount(packageCountComponent)} package metadata files for component '${task.root}/${task.release}/${task.component}' to '${outputDirectory}'.\n`,
+        );
+
+        if (0 === packageCountComponent) {
+          process.stderr.write(
+            outdent`
             ${outdent}
               !
               ! If it is reasonable to expect that this component will never have any entries, mark the component as empty in your configuration:
               !   emptyComponents: { "${task.release}": ["${task.component}"] }
               !` + "\n",
-        );
+          );
+        }
       }
     }
   };
