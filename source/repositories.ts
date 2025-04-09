@@ -66,6 +66,12 @@ export const RepositoryUbuntu: UserConfiguration<UbuntuRelease> = {
     "noble-backports": ["main", "multiverse", "restricted"],
     "oracular-backports": ["main", "multiverse", "restricted"],
   },
+  gzipComponents: {
+    "trusty-backports": ["main", "multiverse", "restricted", "universe"],
+    "trusty-security": ["main", "multiverse", "restricted", "universe"],
+    "trusty-updates": ["main", "multiverse", "restricted", "universe"],
+    trusty: ["main", "multiverse", "restricted", "universe"],
+  },
 };
 
 export const repositories: Record<
