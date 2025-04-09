@@ -21,9 +21,11 @@ export const RepositoryDebian: UserConfiguration<DebianRelease> = {
   releases: DebianReleases,
   components: DebianComponents,
   emptyComponents: {
+    "bookworm-updates": ["contrib", "non-free", "non-free-firmware"],
     "bullseye-updates": ["contrib", "non-free"],
-    "buster-updates": ["contrib"],
-    "trixie-backports": ["main"],
+    "buster-updates": ["contrib", "non-free"],
+    "trixie-backports": ["contrib", "main", "non-free", "non-free-firmware"],
+    "trixie-updates": ["contrib", "main", "non-free", "non-free-firmware"],
   },
   excludedComponents: {
     bullseye: ["non-free-firmware"],
@@ -45,7 +47,9 @@ export const RepositoryDebianSecurity: UserConfiguration<DebianReleaseSecurity> 
   releases: DebianReleasesSecurity,
   components: DebianComponents,
   excludedComponents: {
+    "bookworm-security": ["non-free"],
     "bullseye-security": ["non-free-firmware"],
+    "trixie-security": ["contrib", "main", "non-free", "non-free-firmware"],
   },
 };
 
