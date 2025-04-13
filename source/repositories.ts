@@ -69,6 +69,8 @@ export const RepositoryUbuntu: UserConfiguration<UbuntuRelease> = {
     "jammy-backports": ["multiverse", "restricted"],
     "noble-backports": ["main", "multiverse", "restricted"],
     "oracular-backports": ["main", "multiverse", "restricted"],
+    "trusty-backports": ["restricted"],
+    "xenial-backports": ["multiverse", "restricted"],
   },
   gzipComponents: {
     "trusty-backports": ["main", "multiverse", "restricted", "universe"],
