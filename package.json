@@ -35,7 +35,7 @@
     "@types/chai": "5.2.2",
     "@types/mocha": "10.0.10",
     "@types/node": "22.15.21",
-    "esbuild": "0.25.4",
+    "esbuild": "0.25.5",
     "typescript": "5.8.3"
   },
   "packageManager": "yarn@4.9.1"
