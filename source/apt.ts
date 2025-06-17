@@ -134,7 +134,7 @@ export const getPackagesRawGZ = async (
   return [packagesText, packagesResponse.headers];
 };
 
-export const parsePackages = async function* (packagesRaw: string, headers: IncomingHttpHeaders) {
+export const parsePackages = function* (packagesRaw: string, headers: IncomingHttpHeaders) {
   const cleanedData = packagesRaw
     .replaceAll(/\r\n|\r|\n/g, "\n")
     .replaceAll(/\0/g, "")
