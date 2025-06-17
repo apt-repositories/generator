@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFile, readdir, stat } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
 
 export const validateJsonRecursive = async (root: string): Promise<[boolean, number, number]> => {
