@@ -12,16 +12,16 @@
     "lib": ["ESNext"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
+    "noUncheckedIndexedAccess": true,
     "outDir": "output",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "noUncheckedIndexedAccess": true,
     "target": "ESNext",
     "types": ["@types/node"],
     "useDefineForClassFields": true
   },
-  "include": ["./@types", "./source"],
-  "exclude": ["./output"]
+  "exclude": ["./output"],
+  "include": ["./@types", "./source"]
 }

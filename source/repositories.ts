@@ -11,14 +11,8 @@ import {
 } from "./types.js";
 
 export const RepositoryDebian: UserConfiguration<DebianRelease> = {
-  outputDirectory: "apt",
-  targetRepository: "apt-repositories/debian",
-  mirror: "deb.debian.org",
-  mirrorProtocol: "http",
-  root: "debian",
-  baseDir: "debian",
   architectures: ["amd64"],
-  releases: DebianReleases,
+  baseDir: "debian",
   components: DebianComponents,
   emptyComponents: {
     "bookworm-updates": ["contrib", "non-free", "non-free-firmware"],
@@ -34,34 +28,34 @@ export const RepositoryDebian: UserConfiguration<DebianRelease> = {
     buster: ["non-free-firmware"],
     "buster-updates": ["non-free-firmware"],
   },
+  mirror: "deb.debian.org",
+  mirrorProtocol: "http",
+  outputDirectory: "apt",
+  releases: DebianReleases,
+  root: "debian",
+  targetRepository: "apt-repositories/debian",
 };
 
 export const RepositoryDebianSecurity: UserConfiguration<DebianReleaseSecurity> = {
-  outputDirectory: "apt",
-  targetRepository: "apt-repositories/debian",
-  mirror: "security.debian.org",
-  mirrorProtocol: "http",
-  root: "debian",
-  baseDir: "debian-security",
   architectures: ["amd64"],
-  releases: DebianReleasesSecurity,
+  baseDir: "debian-security",
   components: DebianComponents,
   excludedComponents: {
     "bookworm-security": ["non-free"],
     "bullseye-security": ["non-free-firmware"],
     "trixie-security": ["contrib", "main", "non-free", "non-free-firmware"],
   },
+  mirror: "security.debian.org",
+  mirrorProtocol: "http",
+  outputDirectory: "apt",
+  releases: DebianReleasesSecurity,
+  root: "debian",
+  targetRepository: "apt-repositories/debian",
 };
 
 export const RepositoryUbuntu: UserConfiguration<UbuntuRelease> = {
-  outputDirectory: "apt",
-  targetRepository: "apt-repositories/ubuntu",
-  mirror: "archive.ubuntu.com",
-  mirrorProtocol: "http",
-  root: "ubuntu",
-  baseDir: "ubuntu",
   architectures: ["amd64"],
-  releases: UbuntuReleases,
+  baseDir: "ubuntu",
   components: UbuntuComponents,
   emptyComponents: {
     "bionic-backports": ["multiverse", "restricted"],
@@ -73,11 +67,17 @@ export const RepositoryUbuntu: UserConfiguration<UbuntuRelease> = {
     "xenial-backports": ["multiverse", "restricted"],
   },
   gzipComponents: {
+    trusty: ["main", "multiverse", "restricted", "universe"],
     "trusty-backports": ["main", "multiverse", "restricted", "universe"],
     "trusty-security": ["main", "multiverse", "restricted", "universe"],
     "trusty-updates": ["main", "multiverse", "restricted", "universe"],
-    trusty: ["main", "multiverse", "restricted", "universe"],
   },
+  mirror: "archive.ubuntu.com",
+  mirrorProtocol: "http",
+  outputDirectory: "apt",
+  releases: UbuntuReleases,
+  root: "ubuntu",
+  targetRepository: "apt-repositories/ubuntu",
 };
 
 export const repositories: Record<
