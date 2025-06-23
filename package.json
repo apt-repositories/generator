@@ -24,7 +24,7 @@
     "postversion": "git push"
   },
   "dependencies": {
-    "@oliversalzburg/js-utils": "0.3.0",
+    "@oliversalzburg/js-utils": "0.4.0",
     "apt-parser": "1.5.1",
     "outdent": "0.8.0",
     "undici": "7.10.0",
