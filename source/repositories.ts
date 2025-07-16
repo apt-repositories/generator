@@ -17,7 +17,7 @@ export const RepositoryDebian: UserConfiguration<DebianRelease> = {
   emptyComponents: {
     "bookworm-updates": ["contrib", "non-free", "non-free-firmware"],
     "bullseye-updates": ["contrib", "non-free"],
-    "buster-updates": ["contrib", "non-free"],
+    "buster-updates": ["contrib", "non-free", "main"],
     "trixie-backports": ["contrib", "main", "non-free", "non-free-firmware"],
     "trixie-updates": ["contrib", "main", "non-free", "non-free-firmware"],
   },
