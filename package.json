@@ -28,7 +28,7 @@
     "apt-parser": "1.5.1",
     "outdent": "0.8.0",
     "undici": "7.11.0",
-    "xz-decompress": "0.2.2"
+    "xz-decompress": "0.2.3"
   },
   "devDependencies": {
     "@biomejs/biome": "2.1.2",
