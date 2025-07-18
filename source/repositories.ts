@@ -17,7 +17,6 @@ export const RepositoryDebian: UserConfiguration<DebianRelease> = {
   emptyComponents: {
     "bookworm-updates": ["contrib", "non-free", "non-free-firmware"],
     "bullseye-updates": ["contrib", "non-free"],
-    "buster-updates": ["contrib", "non-free", "main"],
     "trixie-backports": ["contrib", "main", "non-free", "non-free-firmware"],
     "trixie-updates": ["contrib", "main", "non-free", "non-free-firmware"],
   },
@@ -25,8 +24,6 @@ export const RepositoryDebian: UserConfiguration<DebianRelease> = {
     bullseye: ["non-free-firmware"],
     "bullseye-backports": ["non-free-firmware"],
     "bullseye-updates": ["non-free-firmware"],
-    buster: ["non-free-firmware"],
-    "buster-updates": ["non-free-firmware"],
   },
   mirror: "deb.debian.org",
   mirrorProtocol: "http",

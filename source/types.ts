@@ -12,8 +12,6 @@ export const DebianReleases = [
   "bullseye-backports",
   "bullseye-updates",
   "bullseye",
-  "buster-updates",
-  "buster",
   "sid",
   "trixie-backports",
   "trixie-updates",
