@@ -22,7 +22,6 @@ export const RepositoryDebian: UserConfiguration<DebianRelease> = {
   },
   excludedComponents: {
     bullseye: ["non-free-firmware"],
-    "bullseye-backports": ["non-free-firmware"],
     "bullseye-updates": ["non-free-firmware"],
   },
   mirror: "deb.debian.org",

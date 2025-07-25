@@ -9,7 +9,6 @@ export const DebianReleases = [
   "bookworm-backports",
   "bookworm-updates",
   "bookworm",
-  "bullseye-backports",
   "bullseye-updates",
   "bullseye",
   "sid",
