@@ -5,7 +5,7 @@ default: clean build
 build: output
 
 clean:
-	rm --force --recursive node_modules output
+	rm --force --recursive apt node_modules output
 
 docs:
 	@echo "This project has no documentation."
