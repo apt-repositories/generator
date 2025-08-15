@@ -1,7 +1,6 @@
 export const DebianReleasesSecurity = [
   "bookworm-security",
   "bullseye-security",
-  "forky-security",
   "trixie-security",
 ] as const;
 export type DebianReleaseSecurity = (typeof DebianReleasesSecurity)[number];
@@ -11,7 +10,6 @@ export const DebianReleases = [
   "bookworm",
   "bullseye-updates",
   "bullseye",
-  "forky-updates",
   "forky",
   "sid",
   "trixie-backports",
@@ -40,10 +38,6 @@ export const UbuntuReleases = [
   "noble-security",
   "noble-updates",
   "noble",
-  "oracular-backports",
-  "oracular-security",
-  "oracular-updates",
-  "oracular",
   "plucky-backports",
   "plucky-security",
   "plucky-updates",

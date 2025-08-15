@@ -17,8 +17,6 @@ export const RepositoryDebian: UserConfiguration<DebianRelease> = {
   emptyComponents: {
     "bookworm-updates": ["contrib", "non-free", "non-free-firmware"],
     "bullseye-updates": ["contrib", "non-free"],
-    "trixie-backports": ["contrib", "main", "non-free", "non-free-firmware"],
-    "trixie-updates": ["contrib", "main", "non-free", "non-free-firmware"],
   },
   excludedComponents: {
     bullseye: ["non-free-firmware"],
@@ -36,10 +34,11 @@ export const RepositoryDebianSecurity: UserConfiguration<DebianReleaseSecurity> 
   architectures: ["amd64"],
   baseDir: "debian-security",
   components: DebianComponents,
-  excludedComponents: {
+  emptyComponents: {
     "bookworm-security": ["non-free"],
+  },
+  excludedComponents: {
     "bullseye-security": ["non-free-firmware"],
-    "trixie-security": ["contrib", "main", "non-free", "non-free-firmware"],
   },
   mirror: "security.debian.org",
   mirrorProtocol: "http",
@@ -57,8 +56,8 @@ export const RepositoryUbuntu: UserConfiguration<UbuntuRelease> = {
     "bionic-backports": ["multiverse", "restricted"],
     "focal-backports": ["multiverse", "restricted"],
     "jammy-backports": ["multiverse", "restricted"],
-    "noble-backports": ["main", "multiverse", "restricted"],
-    "oracular-backports": ["main", "multiverse", "restricted"],
+    "noble-backports": ["multiverse", "restricted"],
+    "plucky-backports": ["main", "multiverse", "restricted", "universe"],
     "trusty-backports": ["restricted"],
     "xenial-backports": ["multiverse", "restricted"],
   },
