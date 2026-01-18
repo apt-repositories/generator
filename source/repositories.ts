@@ -57,7 +57,7 @@ export const RepositoryUbuntu: UserConfiguration<UbuntuRelease> = {
     "focal-backports": ["multiverse", "restricted"],
     "jammy-backports": ["multiverse", "restricted"],
     "noble-backports": ["multiverse", "restricted"],
-    "plucky-backports": ["main", "multiverse", "restricted", "universe"],
+    "questioning-backports": ["main", "multiverse", "restricted", "universe"],
     "trusty-backports": ["restricted"],
     "xenial-backports": ["multiverse", "restricted"],
   },
