@@ -57,13 +57,13 @@ export const RepositoryUbuntu: UserConfiguration<UbuntuRelease> = {
     "focal-backports": ["multiverse", "restricted"],
     "jammy-backports": ["multiverse", "restricted"],
     "noble-backports": ["multiverse", "restricted"],
-    "questioning-backports": ["main", "multiverse", "restricted", "universe"],
+    "questing-backports": ["main", "multiverse", "restricted", "universe"],
     "trusty-backports": ["restricted"],
     "xenial-backports": ["multiverse", "restricted"],
   },
   excludedComponents: {
-    "questioning-security": ["main", "multiverse", "restricted", "universe"],
-    "questioning-updates": ["main", "multiverse", "restricted", "universe"],
+    "questing-security": ["main", "multiverse", "restricted", "universe"],
+    "questing-updates": ["main", "multiverse", "restricted", "universe"],
   },
   gzipComponents: {
     trusty: ["main", "multiverse", "restricted", "universe"],
