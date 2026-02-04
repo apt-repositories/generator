@@ -61,10 +61,6 @@ export const RepositoryUbuntu: UserConfiguration<UbuntuRelease> = {
     "trusty-backports": ["restricted"],
     "xenial-backports": ["multiverse", "restricted"],
   },
-  excludedComponents: {
-    "questing-security": ["main", "multiverse", "restricted", "universe"],
-    "questing-updates": ["main", "multiverse", "restricted", "universe"],
-  },
   gzipComponents: {
     trusty: ["main", "multiverse", "restricted", "universe"],
     "trusty-backports": ["main", "multiverse", "restricted", "universe"],
