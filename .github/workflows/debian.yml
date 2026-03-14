@@ -1,5 +1,8 @@
 name: Debian
 
+permissions:
+  contents: read
+
 on:
   schedule:
     # nightly at 4:00
