@@ -2,6 +2,7 @@ name: QA
 
 permissions:
   contents: read
+  packages: read
 
 on:
   pull_request:
@@ -16,5 +17,6 @@ jobs:
     uses: oliversalzburg/workflows/.github/workflows/qa-npm-package.yml@main
     permissions:
       contents: read
+      packages: read
     with:
       has-mkdocs: false
