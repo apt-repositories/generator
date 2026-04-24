@@ -13,23 +13,24 @@ docs:
 git-hook:
 	echo "make pretty" > .git/hooks/pre-commit
 
-pretty: node_modules
+pretty: node_modules/.package-lock.json
 	npm exec -- biome check --write --no-errors-on-unmatched
 	npm pkg fix
 
-lint: node_modules
+lint: node_modules/.package-lock.json
 	npm exec -- biome check .
 	npm exec -- tsc --noEmit
 
 test:
 	@echo "This project has no tests."
 
-run: build
+run: ./output/main.js
 	node ./output/main.js
 
 
-node_modules:
+package-lock.json: package.json
+node_modules/.package-lock.json: package-lock.json
 	npm install
 
-output: node_modules
+output/%.js &: node_modules/.package-lock.json
 	node build.js
