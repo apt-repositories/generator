@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.4.9/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.4.12/schema.json",
 	"assist": {
 		"actions": {
 			"recommended": true,
@@ -13,7 +13,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!node_modules", "!output"]
+		"includes": ["**", "!apt", "!node_modules", "!output"]
 	},
 	"json": {
 		"formatter": {
