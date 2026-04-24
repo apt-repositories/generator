@@ -113,7 +113,7 @@ const main = async () => {
 	process.stderr.write(`Generating tasks...\n`);
 	const tasks = serializeConfiguration();
 
-	process.stderr.write(`Generating metadata...\n`);
+	process.stderr.write(`Generating metadata in ${process.cwd()}...\n`);
 	let packageCount = 0;
 	const runTask = async (
 		taskIterator: ArrayIterator<[number, MirrorConfiguration]>,

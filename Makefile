@@ -2,7 +2,7 @@
 
 default: clean build
 
-build: output
+build: ./output/main.js
 
 clean:
 	rm --force --recursive apt node_modules output
