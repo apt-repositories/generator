@@ -1,5 +1,8 @@
 {
 	"$schema": "https://json.schemastore.org/package.json",
+	"allowScripts": {
+		"esbuild@0.28.2": true
+	},
 	"author": "Oliver Salzburg <oliver.salzburg@gmail.com>",
 	"bin": {
 		"generate": "output/main.js"
