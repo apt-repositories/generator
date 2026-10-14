@@ -18,7 +18,7 @@
 		"xz-decompress": "0.2.3"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.14",
+		"@biomejs/biome": "2.5.15",
 		"@types/node": "26.6.3",
 		"esbuild": "0.28.2",
 		"typescript": "7.0.2"
