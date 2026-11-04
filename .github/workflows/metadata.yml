@@ -75,7 +75,7 @@ jobs:
 
           cd apt
           rm -rf apt || true
-          
+
           set -o pipefail
           echo "timestamp=$(date --iso-8601=s --utc)" >> "$GITHUB_OUTPUT"
           echo "log<<EOF" >> $GITHUB_OUTPUT
